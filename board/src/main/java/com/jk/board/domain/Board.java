@@ -39,9 +39,18 @@ public class Board {
 	private String content;
 
 	@Builder
-	public Board(String title, String content) {
+	public Board(Long id, String title, String content) {
+		this.id = id;
 		this.title = title;
 		this.content = content;
+	}
+	
+	public Board withTitleAndContent(String newTitle, String newContent) {
+		return Board.builder()
+				    .id(getId())
+				    .title(newTitle)
+				    .content(newContent)
+				    .build();
 	}
 
 	@Override

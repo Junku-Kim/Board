@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.jk.board.domain.Board;
@@ -64,6 +65,25 @@ public class BoardController {
 	public String boardDelete(Long id) {
 		
 		boardService.boardDelete(id);
+		
+		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/board/modify/{id}")
+	public String boardModify(@PathVariable("id") Long id, Model model) {
+		Optional<Board> boardOptional = boardService.boardView(id);
+		
+		model.addAttribute("board", boardOptional.get());
+		
+		return "board-modify";
+	}
+	
+	@PostMapping("/board/update/{id}")
+	public String boardUpdate(@PathVariable("id") Long id, Board board) {
+		
+		Board newBoard = board.withTitleAndContent(board.getTitle(), board.getContent());
+		
+		boardService.boardWrite(newBoard);
 		
 		return "redirect:/board/list";
 	}

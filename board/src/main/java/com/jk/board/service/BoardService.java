@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jk.board.domain.Board;
 import com.jk.board.repository.BoardRepository;
 
+@Transactional
 @Service
 public class BoardService {
 
