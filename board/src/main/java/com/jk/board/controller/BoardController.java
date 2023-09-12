@@ -1,5 +1,7 @@
 package com.jk.board.controller;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ public class BoardController {
 	@GetMapping("/board/write")
 	public String boardWriteForm() {
 		
-		return "boardwrite";
+		return "board-write";
 	}
 	
 	/*
@@ -41,6 +43,20 @@ public class BoardController {
 		
 		model.addAttribute("list", boardService.boardList());
 		
-		return "boardlist";
+		return "board-list";
+	}
+	
+	// localhost:8080/board/view?id=1
+	@GetMapping("/board/view")
+	public String boardView(Model model, Long id) {
+		Optional<Board> boardOptional = boardService.boardView(id);
+		
+		if (boardService.boardView(id).isPresent()) {
+			model.addAttribute("board", boardOptional.get());
+			return "board-view";
+		} else {
+			return "board-view-error";
+		}
+		
 	}
 }
