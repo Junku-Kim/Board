@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>게시글 에러 페이지</title>
+</head>
+<body>
+	<h1>삭제되거나 존재하지 않는 페이지입니다.</h1>
+	<h4>3초 후에 게시글 리스트로 돌아갑니다.</h4>
+	<script>
+		setTimeout(function() {
+			window.location.href = "/board/list";
+		}, 3000);
+	</script>
+</body>
+</html>
