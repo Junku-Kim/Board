@@ -17,7 +17,7 @@ public class BoardService {
 		this.boardRepository = boardRepository;
 	}
 	// 게시글 작성 처리
-	public void write(Board board) {
+	public void boardWrite(Board board) {
 		boardRepository.save(board);
 	}
 	
@@ -31,5 +31,10 @@ public class BoardService {
 	public Optional<Board> boardView(Long id) {
 		
 		return boardRepository.findById(id);
+	}
+	
+	// 특정 게시글 삭제
+	public void boardDelete(Long id) {
+		boardRepository.deleteById(id);
 	}
 }
