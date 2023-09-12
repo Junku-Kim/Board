@@ -33,7 +33,7 @@ public class BoardController {
 	@PostMapping("/board/writepro")
 	public String boardWritePro(Board board) {
 		
-		boardService.write(board);
+		boardService.boardWrite(board);
 		
 		return "redirect:/";
 	}
@@ -58,5 +58,13 @@ public class BoardController {
 			return "board-view-error";
 		}
 		
+	}
+	
+	@GetMapping("/board/delete")
+	public String boardDelete(Long id) {
+		
+		boardService.boardDelete(id);
+		
+		return "redirect:/board/list";
 	}
 }
