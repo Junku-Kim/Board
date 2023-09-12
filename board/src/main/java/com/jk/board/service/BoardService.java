@@ -1,5 +1,7 @@
 package com.jk.board.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.jk.board.domain.Board;
@@ -16,5 +18,10 @@ public class BoardService {
 
 	public void write(Board board) {
 		boardRepository.save(board);
+	}
+	
+	public List<Board> boardList() {
+		
+		return boardRepository.findAll();
 	}
 }
