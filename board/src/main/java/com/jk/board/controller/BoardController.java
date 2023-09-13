@@ -49,9 +49,9 @@ public class BoardController {
 		return "board-list";
 	}
 	
-	// localhost:8080/board/view?id=1
-	@GetMapping("/board/view")
-	public String boardView(Model model, Long id) {
+	// localhost:8080/board/view/1
+	@GetMapping("/board/view/{id}")
+	public String boardView(@PathVariable Long id, Model model) {
 		Optional<Board> boardOptional = boardService.boardView(id);
 		
 		if (boardService.boardView(id).isPresent()) {
@@ -63,8 +63,8 @@ public class BoardController {
 		
 	}
 	
-	@GetMapping("/board/delete")
-	public String boardDelete(Long id, Model model) {
+	@GetMapping("/board/delete/{id}")
+	public String boardDelete(@PathVariable Long id, Model model) {
 		boardService.boardDelete(id);
 		
 		model.addAttribute("message", "게시글 삭제가 완료되었습니다.");
