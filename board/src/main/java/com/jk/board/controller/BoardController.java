@@ -32,11 +32,13 @@ public class BoardController {
 	 * 하지 않는 다면 브라우저 주소 표시줄에는 현재 요청한 URL이 남아있고 페이지를 다시 로드하지 않는다.
 	 */
 	@PostMapping("/board/writepro")
-	public String boardWritePro(Board board) {
-		
+	public String boardWritePro(Board board, Model model) {
 		boardService.boardWrite(board);
 		
-		return "redirect:/";
+		model.addAttribute("message", "게시글 작성이 완료되었습니다.");
+		model.addAttribute("searchUrl", "/board/list");
+		
+		return "message";
 	}
 	
 	@GetMapping("/board/list")
@@ -62,11 +64,13 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/delete")
-	public String boardDelete(Long id) {
-		
+	public String boardDelete(Long id, Model model) {
 		boardService.boardDelete(id);
 		
-		return "redirect:/board/list";
+		model.addAttribute("message", "게시글 삭제가 완료되었습니다.");
+		model.addAttribute("searchUrl", "/board/list");
+		
+		return "message";
 	}
 	
 	@GetMapping("/board/modify/{id}")
@@ -79,12 +83,15 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/update/{id}")
-	public String boardUpdate(@PathVariable("id") Long id, Board board) {
+	public String boardUpdate(@PathVariable("id") Long id, Board board, Model model) {
 		
 		Board newBoard = board.withTitleAndContent(board.getTitle(), board.getContent());
 		
 		boardService.boardWrite(newBoard);
 		
-		return "redirect:/board/list";
+		model.addAttribute("message", "게시글 수정이 완료되었습니다.");
+		model.addAttribute("searchUrl", "/board/list");
+		
+		return "message";
 	}
 }
