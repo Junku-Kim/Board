@@ -1,5 +1,6 @@
 package com.jk.board.controller;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jk.board.domain.Board;
 import com.jk.board.service.BoardService;
@@ -32,8 +34,8 @@ public class BoardController {
 	 * 하지 않는 다면 브라우저 주소 표시줄에는 현재 요청한 URL이 남아있고 페이지를 다시 로드하지 않는다.
 	 */
 	@PostMapping("/board/writepro")
-	public String boardWritePro(Board board, Model model) {
-		boardService.boardWrite(board);
+	public String boardWritePro(Board board, Model model, MultipartFile file) throws IllegalStateException, IOException {
+		boardService.boardWrite(board, file);
 		
 		model.addAttribute("message", "게시글 작성이 완료되었습니다.");
 		model.addAttribute("searchUrl", "/board/list");
@@ -83,11 +85,11 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/update/{id}")
-	public String boardUpdate(@PathVariable("id") Long id, Board board, Model model) {
+	public String boardUpdate(@PathVariable("id") Long id, Board board, Model model, MultipartFile file) throws IllegalStateException, IOException {
 		
 		Board newBoard = board.withTitleAndContent(board.getTitle(), board.getContent());
 		
-		boardService.boardWrite(newBoard);
+		boardService.boardWrite(newBoard, file);
 		
 		model.addAttribute("message", "게시글 수정이 완료되었습니다.");
 		model.addAttribute("searchUrl", "/board/list");

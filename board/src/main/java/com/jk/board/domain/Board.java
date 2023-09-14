@@ -36,13 +36,20 @@ public class Board {
 	
 	private String title;
 	
+	@Column(columnDefinition = "CLOB")
 	private String content;
+	
+	private String fileName;
+	
+	private String filePath;
 
 	@Builder
-	public Board(Long id, String title, String content) {
+	public Board(Long id, String title, String content, String fileName, String filePath) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
+		this.fileName = fileName;
+		this.filePath = filePath;
 	}
 	
 	public Board withTitleAndContent(String newTitle, String newContent) {
@@ -50,6 +57,18 @@ public class Board {
 				    .id(getId())
 				    .title(newTitle)
 				    .content(newContent)
+				    .fileName(getFileName())
+				    .filePath(getFilePath())
+				    .build();
+	}
+	
+	public Board withFileNameAndFilePath(String newFileName, String newFilePath) {
+		return Board.builder()
+					.id(getId())
+				    .title(getTitle())
+				    .content(getContent())
+				    .fileName(newFileName)
+				    .filePath(newFilePath)
 				    .build();
 	}
 
