@@ -24,7 +24,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="board : ${list}">
+				<tr th:each="board : ${boardPage}">
 					<td th:text="${board.id}">아이디 부분입니다.</td>
 					<td >
 						<a th:text="${board.title}" th:href="@{/board/view/{id}(id=${board.id})}">제목 부분입니다.</a>
@@ -32,6 +32,11 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
+			<a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1})}" th:text="${page}"></a>
+			<strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
+		</th:block>
 	</div>	
 </body>
 </html>

@@ -3,6 +3,10 @@ package com.jk.board.controller;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +48,20 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/list")
-	public String boardList(Model model) {
+	public String boardList(Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
 		
-		model.addAttribute("list", boardService.boardList());
+		Page<Board> boardPage = boardService.boardList(pageable);
+		
+		// int nowPage = pageable.getPageNumber() + 1;
+		// 상단의 방법도 가능하지만 통일성을 위해서 하단의 방법으로, 그리고 0부터 시작하기 때문에 1을 더해준다.
+		int nowPage = boardPage.getPageable().getPageNumber() + 1;
+		int startPage = Math.max(nowPage - 4, 1);
+		int endPage = Math.min(nowPage + 5, boardPage.getTotalPages());
+		
+		model.addAttribute("boardPage", boardPage);
+		model.addAttribute("nowPage", nowPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 		
 		return "board-list";
 	}
