@@ -48,9 +48,18 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/list")
-	public String boardList(Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
+	public String boardList(Model model,
+							@PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.DESC) Pageable pageable,
+							String searchKeyword) {
 		
-		Page<Board> boardPage = boardService.boardList(pageable);
+		Page<Board> boardPage = null;
+		
+		if (searchKeyword == null) {
+			boardPage = boardService.boardList(pageable);
+		} else {
+			boardPage = boardService.boardSearchList(searchKeyword, pageable);
+		}
+		
 		
 		// int nowPage = pageable.getPageNumber() + 1;
 		// 상단의 방법도 가능하지만 통일성을 위해서 하단의 방법으로, 그리고 0부터 시작하기 때문에 1을 더해준다.
