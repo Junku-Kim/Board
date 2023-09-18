@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jk.board.domain.Board;
 import com.jk.board.repository.BoardRepository;
 
+
 @Transactional
 @Service
 public class BoardService {
@@ -36,6 +37,7 @@ public class BoardService {
 		file.transferTo(savedFile);
 		
 		Board newBoard = board.withFileNameAndFilePath(fileName, "/files/" + fileName);
+		System.out.println("Board Id:" + board.getId() + " NewBoard Id: " + newBoard.getId());
 		
 		boardRepository.save(newBoard);
 	}

@@ -27,21 +27,43 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 
-	@GetMapping("/board/write")
-	public String boardWriteForm() {
-		
-		return "board-write";
+	@GetMapping(value = {"/board/write", "/board/write/{id}"})
+	public String boardWriteForm(@PathVariable("id") Optional<Long> id, Model model) {
+		if (id.isEmpty()) {
+			return "board-write";
+		} else {
+			Optional<Board> boardOptional = boardService.boardView(id.get());
+			if (boardOptional.isPresent()) {
+				model.addAttribute("board", boardOptional.get());
+				return "board-write";
+			} else {
+				return "board-view-error";
+			}
+		}
 	}
 	
 	/*
 	 * rediect:를 하면 브라우저에서 페이지를 새로 고치고 새 URL로 이동하게 된다.
 	 * 하지 않는 다면 브라우저 주소 표시줄에는 현재 요청한 URL이 남아있고 페이지를 다시 로드하지 않는다.
 	 */
-	@PostMapping("/board/writepro")
-	public String boardWritePro(Board board, Model model, MultipartFile file) throws IllegalStateException, IOException {
-		boardService.boardWrite(board, file);
+	@PostMapping(value = {"/board/writepro", "/board/writepro/{id}"})
+	public String boardWritePro(@PathVariable("id") Optional<Long> id,
+								Board board, Model model, MultipartFile file) throws IllegalStateException, IOException {
+		if (id.isEmpty()) {
+			boardService.boardWrite(board, file);
+			model.addAttribute("message", "게시글 작성이 완료되었습니다.");
+		} else {
+			Optional<Board> boardOptional = boardService.boardView(id.get());
+			if (boardOptional.isPresent()) {
+				Board newBoard = boardOptional.get().withTitleAndContent(board.getTitle(), board.getContent());
+				boardService.boardWrite(newBoard, file);
+				model.addAttribute("message", "게시글 수정이 완료되었습니다.");
+			} else {
+				return "board-view-error";
+			}
+		}
 		
-		model.addAttribute("message", "게시글 작성이 완료되었습니다.");
+		
 		model.addAttribute("searchUrl", "/board/list");
 		
 		return "message";
@@ -94,28 +116,6 @@ public class BoardController {
 		boardService.boardDelete(id);
 		
 		model.addAttribute("message", "게시글 삭제가 완료되었습니다.");
-		model.addAttribute("searchUrl", "/board/list");
-		
-		return "message";
-	}
-	
-	@GetMapping("/board/modify/{id}")
-	public String boardModify(@PathVariable("id") Long id, Model model) {
-		Optional<Board> boardOptional = boardService.boardView(id);
-		
-		model.addAttribute("board", boardOptional.get());
-		
-		return "board-modify";
-	}
-	
-	@PostMapping("/board/update/{id}")
-	public String boardUpdate(@PathVariable("id") Long id, Board board, Model model, MultipartFile file) throws IllegalStateException, IOException {
-		
-		Board newBoard = board.withTitleAndContent(board.getTitle(), board.getContent());
-		
-		boardService.boardWrite(newBoard, file);
-		
-		model.addAttribute("message", "게시글 수정이 완료되었습니다.");
 		model.addAttribute("searchUrl", "/board/list");
 		
 		return "message";
