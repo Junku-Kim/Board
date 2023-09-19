@@ -79,7 +79,7 @@ public class BoardController {
 		if (searchKeyword == null) {
 			boardPage = boardService.boardList(pageable);
 		} else {
-			boardPage = boardService.boardSearchList(searchKeyword, pageable);
+			boardPage = boardService.boardSearchListWithTitle(searchKeyword, pageable);
 		}
 		
 		
