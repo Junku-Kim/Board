@@ -37,7 +37,6 @@ public class BoardService {
 		file.transferTo(savedFile);
 		
 		Board newBoard = board.withFileNameAndFilePath(fileName, "/files/" + fileName);
-		System.out.println("Board Id:" + board.getId() + " NewBoard Id: " + newBoard.getId());
 		
 		boardRepository.save(newBoard);
 	}
@@ -48,7 +47,8 @@ public class BoardService {
 		return boardRepository.findAll(pageable);
 	}
 	
-	public Page<Board> boardSearchList(String searchKeyword, Pageable pageable) {
+	// 제목을 통한 특정 게시글 검색
+	public Page<Board> boardSearchListWithTitle(String searchKeyword, Pageable pageable) {
 		
 		return boardRepository.findByTitleContaining(searchKeyword, pageable);
 	}
@@ -61,6 +61,20 @@ public class BoardService {
 	
 	// 특정 게시글 삭제
 	public void boardDelete(Long id) {
+		Optional<Board> optionalBoard = boardRepository.findById(id);
+		
+		if (optionalBoard.isPresent()) {
+			Board board = optionalBoard.get();
+			
+			String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+			File fileToDelete = new File(projectPath, board.getFileName());
+			
+			if (fileToDelete.exists()) {
+	            if (fileToDelete.delete()) {
+	            }
+	        }
+		}
+		
 		boardRepository.deleteById(id);
 	}
 }
