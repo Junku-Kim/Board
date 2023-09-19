@@ -50,13 +50,21 @@ public class BoardController {
 	public String boardWritePro(@PathVariable("id") Optional<Long> id,
 								Board board, Model model, MultipartFile file) throws IllegalStateException, IOException {
 		if (id.isEmpty()) {
-			boardService.boardWrite(board, file);
+			if (file.isEmpty()) {
+				boardService.boardWrite(board);
+			} else {
+				boardService.boardWrite(board, file);
+			}
 			model.addAttribute("message", "게시글 작성이 완료되었습니다.");
 		} else {
 			Optional<Board> boardOptional = boardService.boardView(id.get());
 			if (boardOptional.isPresent()) {
-				Board newBoard = boardOptional.get().withTitleAndContent(board.getTitle(), board.getContent());
-				boardService.boardWrite(newBoard, file);
+				if (file.isEmpty()) {
+					boardService.boardWrite(board);
+				} else {
+					Board newBoard = boardOptional.get().withTitleAndContent(board.getTitle(), board.getContent());
+					boardService.boardWrite(newBoard, file);
+				}
 				model.addAttribute("message", "게시글 수정이 완료되었습니다.");
 			} else {
 				return "board-view-error";
@@ -99,7 +107,7 @@ public class BoardController {
 	
 	// localhost:8080/board/view/1
 	@GetMapping("/board/view/{id}")
-	public String boardView(@PathVariable Long id, Model model) {
+	public String boardView(@PathVariable("id") Long id, Model model) {
 		Optional<Board> boardOptional = boardService.boardView(id);
 		
 		if (boardService.boardView(id).isPresent()) {
@@ -112,7 +120,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/delete/{id}")
-	public String boardDelete(@PathVariable Long id, Model model) {
+	public String boardDelete(@PathVariable("id") Long id, Model model) {
 		boardService.boardDelete(id);
 		
 		model.addAttribute("message", "게시글 삭제가 완료되었습니다.");

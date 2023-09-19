@@ -24,38 +24,36 @@ public class BoardService {
 	public BoardService(BoardRepository boardRepository) {
 		this.boardRepository = boardRepository;
 	}
+	
 	// 게시글 작성 처리
+	public void boardWrite(Board board) {
+		boardRepository.save(board);
+	}
+	
+	// 파일을 포함한 게시글 작성 처리
 	public void boardWrite(Board board, MultipartFile file) throws IllegalStateException, IOException {
 		String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-		
 		UUID uuid = UUID.randomUUID();
-		
 		String fileName = uuid + "_" + file.getOriginalFilename();
-		
 		File savedFile = new File(projectPath, fileName);
-		
 		file.transferTo(savedFile);
-		
+
 		Board newBoard = board.withFileNameAndFilePath(fileName, "/files/" + fileName);
-		
 		boardRepository.save(newBoard);
 	}
 	
 	// 게시글 리스트 처리
 	public Page<Board> boardList(Pageable pageable) {
-		
 		return boardRepository.findAll(pageable);
 	}
 	
 	// 제목을 통한 특정 게시글 검색
 	public Page<Board> boardSearchListWithTitle(String searchKeyword, Pageable pageable) {
-		
 		return boardRepository.findByTitleContaining(searchKeyword, pageable);
 	}
 	
 	// 특정 게시글 불러오기
 	public Optional<Board> boardView(Long id) {
-		
 		return boardRepository.findById(id);
 	}
 	
@@ -65,14 +63,15 @@ public class BoardService {
 		
 		if (optionalBoard.isPresent()) {
 			Board board = optionalBoard.get();
-			
-			String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-			File fileToDelete = new File(projectPath, board.getFileName());
-			
-			if (fileToDelete.exists()) {
-	            if (fileToDelete.delete()) {
-	            }
-	        }
+			if (board.getFileName() != null) {
+				String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+				File fileToDelete = new File(projectPath, board.getFileName());
+
+				if (fileToDelete.exists()) {
+					if (fileToDelete.delete()) {
+					}
+				}
+			}
 		}
 		
 		boardRepository.deleteById(id);
