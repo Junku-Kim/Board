@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jk.board.domain.Board;
+import com.jk.board.entity.Board;
 import com.jk.board.service.BoardService;
 
 

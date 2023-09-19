@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jk.board.domain.Board;
+import com.jk.board.entity.Board;
 import com.jk.board.repository.BoardRepository;
 
 
