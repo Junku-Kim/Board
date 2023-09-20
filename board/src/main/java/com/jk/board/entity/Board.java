@@ -1,5 +1,7 @@
 package com.jk.board.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,24 +41,38 @@ public class Board {
 	@Column(columnDefinition = "CLOB")
 	private String content;
 	
+	private String writer;
+	
+	private int hit;
+	
+	private LocalDateTime createDate = LocalDateTime.now();
+	
+	private LocalDateTime modifiedDate;
+	
 	private String fileName;
 	
 	private String filePath;
 
 	@Builder
-	public Board(Long id, String title, String content, String fileName, String filePath) {
+	public Board(Long id, String title, String content, String writer, int hit, String fileName, String filePath) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
+		this.writer = writer;
+		this.hit = hit;
 		this.fileName = fileName;
 		this.filePath = filePath;
 	}
+	
+	
 	
 	public Board withTitleAndContent(String newTitle, String newContent) {
 		return Board.builder()
 				    .id(getId())
 				    .title(newTitle)
 				    .content(newContent)
+				    .writer(getWriter())
+				    .hit(getHit())
 				    .fileName(getFileName())
 				    .filePath(getFilePath())
 				    .build();
@@ -67,6 +83,8 @@ public class Board {
 					.id(getId())
 				    .title(getTitle())
 				    .content(getContent())
+				    .writer(getWriter())
+				    .hit(getHit())
 				    .fileName(newFileName)
 				    .filePath(newFilePath)
 				    .build();
