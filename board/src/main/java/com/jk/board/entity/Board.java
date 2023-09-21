@@ -43,9 +43,9 @@ public class Board {
 	
 	private String writer;
 	
-	private int hit;
+	private int hits;
 	
-	private LocalDateTime createDate = LocalDateTime.now();
+	private LocalDateTime createdDate = LocalDateTime.now();
 	
 	private LocalDateTime modifiedDate;
 	
@@ -54,12 +54,12 @@ public class Board {
 	private String filePath;
 
 	@Builder
-	public Board(Long id, String title, String content, String writer, int hit, String fileName, String filePath) {
+	public Board(Long id, String title, String content, String writer, int hits, String fileName, String filePath) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
-		this.hit = hit;
+		this.hits = hits;
 		this.fileName = fileName;
 		this.filePath = filePath;
 	}
@@ -72,7 +72,7 @@ public class Board {
 				    .title(newTitle)
 				    .content(newContent)
 				    .writer(getWriter())
-				    .hit(getHit())
+				    .hits(getHits())
 				    .fileName(getFileName())
 				    .filePath(getFilePath())
 				    .build();
@@ -84,7 +84,7 @@ public class Board {
 				    .title(getTitle())
 				    .content(getContent())
 				    .writer(getWriter())
-				    .hit(getHit())
+				    .hits(getHits())
 				    .fileName(newFileName)
 				    .filePath(newFilePath)
 				    .build();
