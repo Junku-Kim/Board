@@ -49,49 +49,51 @@ public class Board {
 	
 	private LocalDateTime modifiedDate;
 	
-	private String fileName;
-	
-	private String filePath;
+//	private String fileName;
+//	
+//	private String filePath;
 
 	@Builder
-	public Board(Long id, String title, String content, String writer, int hits, String fileName, String filePath) {
+	public Board(Long id, String title, String content, String writer, int hits) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 		this.hits = hits;
-		this.fileName = fileName;
-		this.filePath = filePath;
 	}
 	
-	
-	
-	public Board withTitleAndContent(String newTitle, String newContent) {
-		return Board.builder()
-				    .id(getId())
-				    .title(newTitle)
-				    .content(newContent)
-				    .writer(getWriter())
-				    .hits(getHits())
-				    .fileName(getFileName())
-				    .filePath(getFilePath())
-				    .build();
-	}
-	
-	public Board withFileNameAndFilePath(String newFileName, String newFilePath) {
-		return Board.builder()
-					.id(getId())
-				    .title(getTitle())
-				    .content(getContent())
-				    .writer(getWriter())
-				    .hits(getHits())
-				    .fileName(newFileName)
-				    .filePath(newFilePath)
-				    .build();
-	}
-
-	@Override
-	public String toString() {
-		return "Board [title=" + title + ", content=" + content + "]";
-	}
+//	@Builder
+//	public Board(Long id, String title, String content, String writer, int hits, String fileName, String filePath) {
+//		this.id = id;
+//		this.title = title;
+//		this.content = content;
+//		this.writer = writer;
+//		this.hits = hits;
+//		this.fileName = fileName;
+//		this.filePath = filePath;
+//	}
+//	
+//	public Board withTitleAndContent(String newTitle, String newContent) {
+//		return Board.builder()
+//				    .id(getId())
+//				    .title(newTitle)
+//				    .content(newContent)
+//				    .writer(getWriter())
+//				    .hits(getHits())
+//				    .fileName(getFileName())
+//				    .filePath(getFilePath())
+//				    .build();
+//	}
+//	
+//	public Board withFileNameAndFilePath(String newFileName, String newFilePath) {
+//		return Board.builder()
+//					.id(getId())
+//				    .title(getTitle())
+//				    .content(getContent())
+//				    .writer(getWriter())
+//				    .hits(getHits())
+//				    .fileName(newFileName)
+//				    .filePath(newFilePath)
+//				    .build();
+//	}
 }

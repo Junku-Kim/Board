@@ -8,5 +8,5 @@ import com.jk.board.entity.Board;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 	
-	Page<Board> findByTitleContaining(String searchKeyword, Pageable pageable);
+	//Page<Board> findByTitleContaining(String searchKeyword, Pageable pageable);
 }
