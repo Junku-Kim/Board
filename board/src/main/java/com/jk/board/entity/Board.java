@@ -54,8 +54,7 @@ public class Board {
 //	private String filePath;
 
 	@Builder
-	public Board(Long id, String title, String content, String writer, int hits) {
-		this.id = id;
+	public Board(String title, String content, String writer, int hits) {
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
