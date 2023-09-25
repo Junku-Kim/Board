@@ -45,6 +45,8 @@ public class Board {
 	
 	private int hits;
 	
+	private boolean delete;
+	
 	private LocalDateTime createdDate = LocalDateTime.now();
 	
 	private LocalDateTime modifiedDate;
@@ -54,11 +56,12 @@ public class Board {
 //	private String filePath;
 
 	@Builder
-	public Board(String title, String content, String writer, int hits) {
+	public Board(String title, String content, String writer, int hits, boolean delete) {
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 		this.hits = hits;
+		this.delete = delete;
 	}
 	
 //	@Builder
