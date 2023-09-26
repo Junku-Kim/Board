@@ -50,10 +50,6 @@ public class Board {
 	private LocalDateTime createdDate = LocalDateTime.now();
 	
 	private LocalDateTime modifiedDate;
-	
-//	private String fileName;
-//	
-//	private String filePath;
 
 	@Builder
 	public Board(String title, String content, String writer, int hits, boolean delete) {
@@ -64,38 +60,10 @@ public class Board {
 		this.delete = delete;
 	}
 	
-//	@Builder
-//	public Board(Long id, String title, String content, String writer, int hits, String fileName, String filePath) {
-//		this.id = id;
-//		this.title = title;
-//		this.content = content;
-//		this.writer = writer;
-//		this.hits = hits;
-//		this.fileName = fileName;
-//		this.filePath = filePath;
-//	}
-//	
-//	public Board withTitleAndContent(String newTitle, String newContent) {
-//		return Board.builder()
-//				    .id(getId())
-//				    .title(newTitle)
-//				    .content(newContent)
-//				    .writer(getWriter())
-//				    .hits(getHits())
-//				    .fileName(getFileName())
-//				    .filePath(getFilePath())
-//				    .build();
-//	}
-//	
-//	public Board withFileNameAndFilePath(String newFileName, String newFilePath) {
-//		return Board.builder()
-//					.id(getId())
-//				    .title(getTitle())
-//				    .content(getContent())
-//				    .writer(getWriter())
-//				    .hits(getHits())
-//				    .fileName(newFileName)
-//				    .filePath(newFilePath)
-//				    .build();
-//	}
+	public void update(String title, String content, String writer) {
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+        this.modifiedDate = LocalDateTime.now();
+    }
 }
