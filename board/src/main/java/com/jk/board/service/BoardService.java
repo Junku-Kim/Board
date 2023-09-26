@@ -1,79 +1,57 @@
-//package com.jk.board.service;
-//
-//import java.io.File;
-//import java.io.IOException;
-//import java.util.Optional;
-//import java.util.UUID;
-//
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-//import org.springframework.web.multipart.MultipartFile;
-//
-//import com.jk.board.entity.Board;
-//import com.jk.board.repository.BoardRepository;
-//
-//
-//@Transactional
-//@Service
-//public class BoardService {
-//
-//	private final BoardRepository boardRepository;
-//	
-//	public BoardService(BoardRepository boardRepository) {
-//		this.boardRepository = boardRepository;
-//	}
-//	
-//	// 게시글 작성 처리
-//	public void boardWrite(Board board) {
-//		boardRepository.save(board);
-//	}
-//	
-//	// 파일을 포함한 게시글 작성 처리
-//	public void boardWrite(Board board, MultipartFile file) throws IllegalStateException, IOException {
-//		String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-//		UUID uuid = UUID.randomUUID();
-//		String fileName = uuid + "_" + file.getOriginalFilename();
-//		File savedFile = new File(projectPath, fileName);
-//		file.transferTo(savedFile);
-//
-//		Board newBoard = board.withFileNameAndFilePath(fileName, "/files/" + fileName);
-//		boardRepository.save(newBoard);
-//	}
-//	
-//	// 게시글 리스트 처리
-//	public Page<Board> boardList(Pageable pageable) {
-//		return boardRepository.findAll(pageable);
-//	}
-//	
-//	// 제목을 통한 특정 게시글 검색
-//	public Page<Board> boardSearchListWithTitle(String searchKeyword, Pageable pageable) {
-//		return boardRepository.findByTitleContaining(searchKeyword, pageable);
-//	}
-//	
-//	// 특정 게시글 불러오기
-//	public Optional<Board> boardView(Long id) {
-//		return boardRepository.findById(id);
-//	}
-//	
-//	// 특정 게시글 삭제
-//	public void boardDelete(Long id) {
-//		Optional<Board> optionalBoard = boardRepository.findById(id);
-//		
-//		if (optionalBoard.isPresent()) {
-//			Board board = optionalBoard.get();
-//			if (board.getFileName() != null) {
-//				String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-//				File fileToDelete = new File(projectPath, board.getFileName());
-//
-//				if (fileToDelete.exists()) {
-//					if (fileToDelete.delete()) {
-//					}
-//				}
-//			}
-//		}
-//		
-//		boardRepository.deleteById(id);
-//	}
-//}
+package com.jk.board.service;
+
+import java.util.List;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jk.board.dto.BoardRequest;
+import com.jk.board.dto.BoardResponse;
+import com.jk.board.entity.Board;
+import com.jk.board.exception.CustomException;
+import com.jk.board.exception.ErrorCode;
+import com.jk.board.repository.BoardRepository;
+
+
+@Service
+public class BoardService {
+
+	private final BoardRepository boardRepository;
+	
+	public BoardService(final BoardRepository boardRepository) {
+		this.boardRepository = boardRepository;
+	}
+	
+	/*
+	 * 게시글 생성
+	 */
+	@Transactional
+	public Long writeBoard(final BoardRequest boardRequest) {
+		Board board = boardRepository.save(boardRequest.toEntity());
+		
+		return board.getId();
+	}
+	
+	/*
+	 * 게시글 리스트 조회
+	 */
+	public List<BoardResponse> findBoards() {
+		Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
+		List<Board> list = boardRepository.findAll(sort);
+		
+		return list.stream().map(BoardResponse::new).toList();
+	}
+	
+	/*
+	 * 게시글 수정
+	 */
+	@Transactional
+	public Long updateBoard(final Long id, BoardRequest boardRequest) {
+		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		board.update(boardRequest.getTitle(), boardRequest.getContent(), boardRequest.getWriter());
+		
+		return id;
+	}
+}
