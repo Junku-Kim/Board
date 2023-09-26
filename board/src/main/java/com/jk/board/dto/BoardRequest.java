@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BoardRequestDto {
+public class BoardRequest {
 
 	private String title;
 	private String content;
 	private String writer;
-	private boolean delete;
+	private boolean isDeleted;
 	
 	public Board toEntity() {
 		return Board.builder()
@@ -21,7 +21,7 @@ public class BoardRequestDto {
 					.content(content)
 					.writer(writer)
 					.hits(0)
-					.delete(delete)
+					.isDeleted(isDeleted)
 					.build();
 	}
 }

@@ -45,19 +45,19 @@ public class Board {
 	
 	private int hits;
 	
-	private boolean delete;
+	private boolean isDeleted;
 	
 	private LocalDateTime createdDate = LocalDateTime.now();
 	
 	private LocalDateTime modifiedDate;
 
 	@Builder
-	public Board(String title, String content, String writer, int hits, boolean delete) {
+	public Board(String title, String content, String writer, int hits, boolean isDeleted) {
 		this.title = title;
 		this.content = content;
 		this.writer = writer;
 		this.hits = hits;
-		this.delete = delete;
+		this.isDeleted = isDeleted;
 	}
 	
 	public void update(String title, String content, String writer) {
