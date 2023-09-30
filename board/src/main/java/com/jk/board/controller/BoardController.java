@@ -15,4 +15,12 @@ public class BoardController {
 	public String listBoards() {
 		return "board/list";
 	}
+	
+	/*
+	 * 게시글 작성 페이지
+	 */
+	@GetMapping("/write")
+	public String writeBoard() {
+		return "board/write";
+	}
 }
