@@ -6,7 +6,7 @@
       
 	<th:block layout:fragment="content">
 		<div class="card-content">
-			<form class="form-horizontal">
+			<form id = "form" class="form-horizontal">
 				<div class="form-group">
 					<label for="title" class="col-sm-2 control-label">제목</label>
 					<div class="col-sm-10">
@@ -30,7 +30,7 @@
 	
 				<div class="btn_wrap text-center">
 					<a th:href="@{/board/list}" class="btn btn-default waves-effect waves-light">돌아가기</a>
-					<button type="button" class="btn btn-primary waves-effect waves-light">저장하기</button>
+					<button type="button" onclick="writeBoard();" class="btn btn-primary waves-effect waves-light">저장하기</button>
 				</div>
 			</form>
 		</div>
@@ -41,6 +41,37 @@
 		<script th:inline="javascript">
 			/*<![CDATA[*/
 			
+				/*
+	 			* 게시글 등록(생성/수정)
+	 			*/
+				function writeBoard() {
+					const form = document.getElementById('form');
+					const params = {
+						title: form.title.value,
+						writer: form.writer.value,
+						content: form.content.value,
+						idDeleted: 0
+					};
+
+					fetch('/api/boards', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(params)
+
+					}).then(response => {
+						if (!response.ok) {
+							throw new Error('Request failed...');
+						}
+
+						alert('저장되었습니다.');
+						location.href = '/board/list';
+
+					}).catch(error => {
+						alert('오류가 발생하였습니다.');
+					});
+				}
 			/*]]>*/
 		</script>
 	</th:block>
