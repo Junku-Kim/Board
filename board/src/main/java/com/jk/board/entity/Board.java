@@ -36,17 +36,22 @@ public class Board {
 	@Column(name = "BOARD_ID")
 	private Long id;
 	
+	@Column(nullable = false)
 	private String title;
 	
-	@Column(columnDefinition = "CLOB")
+	@Column(nullable = false, columnDefinition = "CLOB")
 	private String content;
 	
+	@Column(nullable = false)
 	private String writer;
 	
+	@Column(nullable = false)
 	private int hits;
 	
+	@Column(nullable = false)
 	private boolean isDeleted;
 	
+	@Column(nullable = false)
 	private LocalDateTime createdDate = LocalDateTime.now();
 	
 	private LocalDateTime modifiedDate;
