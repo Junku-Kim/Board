@@ -2,12 +2,14 @@ package com.jk.board.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.board.dto.BoardRequest;
@@ -36,8 +38,8 @@ public class BoardApiController {
 	 * 게시글 리스트 조회
 	 */
 	@GetMapping("/boards")
-	public List<BoardResponse> findBoards() {
-		return boardService.findBoards();
+	public List<BoardResponse> findBoards(@RequestParam final boolean isDeleted) {
+		return boardService.findAllBoardsByIsDeleted(isDeleted);
 	}
 
 	/*
@@ -46,5 +48,13 @@ public class BoardApiController {
 	@PatchMapping("/boards/{id}")
 	public Long updateBoard(@PathVariable final Long id, @RequestBody final BoardRequest boardRequest) {
 		return boardService.updateBoard(id, boardRequest);
+	}
+	
+	/*
+	 * 게시글 삭제
+	 */
+	@DeleteMapping("/boards/{id}")
+	public Long deleteBoard(@PathVariable final Long id) {
+		return boardService.delete(id);
 	}
 }

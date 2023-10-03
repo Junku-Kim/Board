@@ -37,9 +37,19 @@ public class BoardService {
 	/*
 	 * 게시글 리스트 조회
 	 */
-	public List<BoardResponse> findBoards() {
+	public List<BoardResponse> findAllBoards() {
 		Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
 		List<Board> list = boardRepository.findAll(sort);
+		
+		return list.stream().map(BoardResponse::new).toList();
+	}
+	
+	/*
+	 * 게시글 리스트 조회 (삭제되지 않은)
+	 */
+	public List<BoardResponse> findAllBoardsByIsDeleted(final boolean isDeleted) {
+		Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
+		List<Board> list = boardRepository.findAllByIsDeleted(isDeleted, sort);
 		
 		return list.stream().map(BoardResponse::new).toList();
 	}
@@ -48,9 +58,20 @@ public class BoardService {
 	 * 게시글 수정
 	 */
 	@Transactional
-	public Long updateBoard(final Long id, BoardRequest boardRequest) {
+	public Long updateBoard(final Long id, final BoardRequest boardRequest) {
 		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		board.update(boardRequest.getTitle(), boardRequest.getContent(), boardRequest.getWriter());
+		
+		return id;
+	}
+	
+	/*
+	 * 게시글 삭제
+	 */
+	@Transactional
+	public Long delete(final Long id) {
+		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		board.delete();
 		
 		return id;
 	}
