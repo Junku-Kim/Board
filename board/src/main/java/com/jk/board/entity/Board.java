@@ -71,4 +71,8 @@ public class Board {
         this.writer = writer;
         this.modifiedDate = LocalDateTime.now();
     }
+	
+	public void delete() {
+		this.isDeleted = true;
+	}
 }
