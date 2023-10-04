@@ -35,6 +35,28 @@ public class BoardService {
 	}
 	
 	/*
+	 * 게시글 수정
+	 */
+	@Transactional
+	public Long updateBoard(final Long id, final BoardRequest boardRequest) {
+		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		board.update(boardRequest.getTitle(), boardRequest.getContent(), boardRequest.getWriter());
+		
+		return id;
+	}
+	
+	/*
+	 * 게시글 삭제
+	 */
+	@Transactional
+	public Long deleteBoard(final Long id) {
+		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		board.delete();
+		
+		return id;
+	}
+	
+	/*
 	 * 게시글 리스트 조회
 	 */
 	public List<BoardResponse> findAllBoards() {
@@ -55,24 +77,13 @@ public class BoardService {
 	}
 	
 	/*
-	 * 게시글 수정
+	 * 게시글 상세정보 조회
 	 */
 	@Transactional
-	public Long updateBoard(final Long id, final BoardRequest boardRequest) {
+	public BoardResponse findBoardById(final Long id) {
 		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
-		board.update(boardRequest.getTitle(), boardRequest.getContent(), boardRequest.getWriter());
+		board.increaseHits();
 		
-		return id;
-	}
-	
-	/*
-	 * 게시글 삭제
-	 */
-	@Transactional
-	public Long delete(final Long id) {
-		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
-		board.delete();
-		
-		return id;
+		return new BoardResponse(board);
 	}
 }
