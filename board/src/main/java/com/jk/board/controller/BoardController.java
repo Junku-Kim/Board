@@ -30,7 +30,7 @@ public class BoardController {
 	 * 게시글 상세 페이지
 	 */
 	@GetMapping("/view/{id}")
-	public String viewBoard(@PathVariable final Long id, final Model model) {
+	public String viewBoard(@PathVariable final Long id, Model model) {
 		model.addAttribute("id", id);
 		
 		return "board/view";
