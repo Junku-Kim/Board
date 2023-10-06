@@ -57,6 +57,11 @@
 		 * 페이지 로딩 시점에 실행되는 함수
 		 */
 		window.onload = () => {
+			window.onpageshow = function (event) {
+				if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+					location.reload();
+				}
+			}
 
 			findAll();
 		}
