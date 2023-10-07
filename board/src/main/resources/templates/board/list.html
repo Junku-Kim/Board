@@ -86,7 +86,7 @@
 							<tr>
     							<td>${obj.id}</td>
     							<td class="text-left">
-    								<a href="javascript: void(0);">${obj.title}</a>
+    								<a href="javascript: void(0);" onclick="goView(${obj.id})">${obj.title}</a>
     							</td>
     							<td>${obj.writer}</td>
     							<td>${moment(obj.createdDate).format('YYYY-MM-DD HH:mm:ss')}</td>
@@ -100,6 +100,12 @@
 			});
 		}
 		
+		/*
+		* 게시글 상세 조회
+		*/
+		function goView(id) {
+			location.href = `/board/view/${id}`;
+		}
 
 	/*]]>*/
     </script>

@@ -5,10 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/board")
 @Controller
-public class BoardController {
+public class BoardViewController {
 
 	/*
 	 * 게시글 리스트 페이지
@@ -22,7 +23,9 @@ public class BoardController {
 	 * 게시글 작성 페이지
 	 */
 	@GetMapping("/write")
-	public String writeBoard() {
+	public String writeBoard(@RequestParam(required = false) final Long id, Model model) {
+		model.addAttribute("id", id);
+		
 		return "board/write";
 	}
 	
