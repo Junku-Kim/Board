@@ -84,13 +84,13 @@
 					json.forEach((obj, idx) => {
 						html += `
 							<tr>
-    							<td>${obj.id}</td>
-    							<td class="text-left">
-    								<a href="javascript: void(0);" onclick="goView(${obj.id})">${obj.title}</a>
-    							</td>
-    							<td>${obj.writer}</td>
-    							<td>${moment(obj.createdDate).format('YYYY-MM-DD HH:mm:ss')}</td>
-    							<td>${obj.hits}</td>
+	    						<td>${obj.id}</td>
+	    						<td class="text-left">
+	    							<a href="javascript: void(0);" onclick="goView(${obj.id})">${obj.title}</a>
+	    						</td>
+	    						<td>${obj.writer}</td>
+	    						<td>${obj.modifiedDate ? moment(obj.modifiedDate).format('YYYY-MM-DD HH:mm:ss') : moment(obj.createdDate).format('YYYY-MM-DD HH:mm:ss')}</td>
+	    						<td>${obj.hits}</td>
 							</tr>
 						`;
 					});
