@@ -7,9 +7,9 @@ import lombok.Setter;
 @Setter
 public class CommonParams {
 
-	private int page;
+	private int currentPage;
 	private int recordPerPage;
 	private int pageSize;
-	private String keyword;
+	private String keywordForSearch;
 	private String searchType;
 }
