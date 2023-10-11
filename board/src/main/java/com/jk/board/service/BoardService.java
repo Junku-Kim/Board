@@ -1,6 +1,9 @@
 package com.jk.board.service;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -12,6 +15,9 @@ import com.jk.board.dto.BoardResponse;
 import com.jk.board.entity.Board;
 import com.jk.board.exception.CustomException;
 import com.jk.board.exception.ErrorCode;
+import com.jk.board.mapper.BoardMapper;
+import com.jk.board.paging.CommonParams;
+import com.jk.board.paging.Pagination;
 import com.jk.board.repository.BoardRepository;
 
 
@@ -19,9 +25,11 @@ import com.jk.board.repository.BoardRepository;
 public class BoardService {
 
 	private final BoardRepository boardRepository;
+	private final BoardMapper boardMapper;
 	
-	public BoardService(final BoardRepository boardRepository) {
+	public BoardService(final BoardRepository boardRepository, final BoardMapper boardMapper) {
 		this.boardRepository = boardRepository;
+		this.boardMapper = boardMapper;
 	}
 	
 	/*
@@ -74,6 +82,27 @@ public class BoardService {
 		List<Board> list = boardRepository.findAllByIsDeleted(isDeleted, sort);
 		
 		return list.stream().map(BoardResponse::new).toList();
+	}
+	
+	/*
+	 * 게시글 리스트 조회 (페이지네이션)
+	 */
+	public Map<String, Object> findAllBoardsWithPagination(CommonParams params) {
+		int count = boardMapper.countBoard(params);
+		
+		if (count < 1) {
+			return Collections.emptyMap();
+		}
+		
+		Pagination pagination = new Pagination(count, params);
+		params.setPagination(pagination);
+		
+		List<BoardResponse> list = boardMapper.findAllBoards(params);
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("params", params);
+		response.put("list", list);
+		return response;
 	}
 	
 	/*
