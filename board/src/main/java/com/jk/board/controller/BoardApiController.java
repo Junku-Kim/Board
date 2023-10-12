@@ -1,6 +1,6 @@
 package com.jk.board.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.board.dto.BoardRequest;
 import com.jk.board.dto.BoardResponse;
+import com.jk.board.paging.CommonParams;
 import com.jk.board.service.BoardService;
 
 @RequestMapping("/api")
@@ -54,8 +54,8 @@ public class BoardApiController {
 	 * 게시글 리스트 조회
 	 */
 	@GetMapping("/boards")
-	public List<BoardResponse> findBoards(@RequestParam final boolean isDeleted) {
-		return boardService.findAllBoardsByIsDeleted(isDeleted);
+	public Map<String, Object> findBoards(final CommonParams params) {
+		return boardService.findAllBoards(params);
 	}
 
 	/*

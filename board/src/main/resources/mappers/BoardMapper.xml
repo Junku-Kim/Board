@@ -5,41 +5,41 @@
 	
 	<!-- SELECT 결과 Map-->
 	<resultMap id="BoardResultMap" type="com.jk.board.dto.BoardResponse">
-		<result property="id" column="id" />
+		<result property="id" column="board_id" />
 		<result property="title" column="title" />
 		<result property="content" column="content" />
 		<result property="writer" column="writer" />
 		<result property="hits" column="hits" />
-		<result property="isDeleted" column="isDeleted" />
-		<result property="createdDate" column="createdDate" />
-		<result property="modifiedDate" column="modifiedDate" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="createdDate" column="created_date" />
+		<result property="modifiedDate" column="modified_date" />
 	</resultMap>
 	
 	<!-- WHERE 조건-->
 	<sql id="conditions">
 		<where>
-			isDeleted = false
-			<if test="keyword != null and keyword.equals('') == false">
+			is_deleted = 0
+			<if test="keywordForSearch != null and keywordForSearch.equals('') == false">
 				<choose>
 					<when test="searchType == null or searchType.equals('')">
 						AND (
-							title LIKE CONCAT('%', #{keyword}, '%')
-							OR content LIKE CONCAT('%', #{keyword}, '%')
-							OR writer LIKE CONCAT('%', #{keyword}, '%')
+							title LIKE CONCAT('%', #{keywordForSearch}, '%')
+							OR content LIKE CONCAT('%', #{keywordForSearch}, '%')
+							OR writer LIKE CONCAT('%', #{keywordForSearch}, '%')
 						)
 					</when>
 					<otherwise>
 						<choose>
 							<when test="searchType.equals('title')">
-								AND title LIKE CONCAT('%', #{keyword}, '%')
+								AND title LIKE CONCAT('%', #{keywordForSearch}, '%')
 							</when>
 							
 							<when test="searchType.equals('content')">
-								AND content LIKE CONCAT('%', #{keyword}, '%')
+								AND content LIKE CONCAT('%', #{keywordForSearch}, '%')
 							</when>
 							
 							<when test="searchType.equals('writer')">
-								AND writer LIKE CONCAT('%', #{keyword}, '%')
+								AND writer LIKE CONCAT('%', #{keywordForSearch}, '%')
 							</when>
 						</choose>
 					</otherwise>
@@ -58,21 +58,21 @@
 	</select>
 	
 	<!-- 게시글 리스트 조회 -->
-	<select id="findAllBoards" parameterType="com.jk.paging.CommonParams" resultType="BoardResultMap">
+	<select id="findAllBoards" parameterType="com.jk.board.paging.CommonParams" resultMap="BoardResultMap">
 		SELECT
-			id
+			board_id
 			, title
 			, content
 			, writer
 			, hits
-			, isDeleted
+			, is_deleted
 			, created_date
 			, modified_date
 		FROM
 			board
 		<include refid="conditions" />
 		ORDER BY
-			id DESC, created_date DESC
+			board_id DESC, created_date DESC
 		OFFSET #{pagination.offsetStart} ROWS FETCH NEXT #{recordPerPage} ROWS ONLY
 	</select>
 </mapper>

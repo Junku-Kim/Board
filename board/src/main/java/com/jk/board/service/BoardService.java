@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,31 +63,11 @@ public class BoardService {
 	}
 	
 	/*
-	 * 게시글 리스트 조회
-	 */
-	public List<BoardResponse> findAllBoards() {
-		Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
-		List<Board> list = boardRepository.findAll(sort);
-		
-		return list.stream().map(BoardResponse::new).toList();
-	}
-	
-	/*
-	 * 게시글 리스트 조회 (삭제되지 않은)
-	 */
-	public List<BoardResponse> findAllBoardsByIsDeleted(final boolean isDeleted) {
-		Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
-		List<Board> list = boardRepository.findAllByIsDeleted(isDeleted, sort);
-		
-		return list.stream().map(BoardResponse::new).toList();
-	}
-	
-	/*
 	 * 게시글 리스트 조회 (페이지네이션)
 	 */
-	public Map<String, Object> findAllBoardsWithPagination(CommonParams params) {
+	public Map<String, Object> findAllBoards(final CommonParams params) {
 		int count = boardMapper.countBoard(params);
-		
+
 		if (count < 1) {
 			return Collections.emptyMap();
 		}
