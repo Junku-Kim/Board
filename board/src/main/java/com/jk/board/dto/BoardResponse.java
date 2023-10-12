@@ -4,9 +4,12 @@ import java.time.LocalDateTime;
 
 import com.jk.board.entity.Board;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardResponse {
 
 	private Long id;
