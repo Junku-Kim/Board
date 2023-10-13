@@ -23,23 +23,23 @@
 				<choose>
 					<when test="searchType == null or searchType.equals('')">
 						AND (
-							title LIKE CONCAT('%', #{keywordForSearch}, '%')
-							OR content LIKE CONCAT('%', #{keywordForSearch}, '%')
-							OR writer LIKE CONCAT('%', #{keywordForSearch}, '%')
+							title LIKE '%' || #{keywordForSearch} || '%'
+							OR content LIKE '%' || #{keywordForSearch} || '%'
+							OR writer LIKE '%' || #{keywordForSearch} || '%'
 						)
 					</when>
 					<otherwise>
 						<choose>
 							<when test="searchType.equals('title')">
-								AND title LIKE CONCAT('%', #{keywordForSearch}, '%')
+								AND title LIKE '%' || #{keywordForSearch} || '%'
 							</when>
 							
 							<when test="searchType.equals('content')">
-								AND content LIKE CONCAT('%', #{keywordForSearch}, '%')
+								AND content LIKE '%' || #{keywordForSearch} || '%'
 							</when>
 							
 							<when test="searchType.equals('writer')">
-								AND writer LIKE CONCAT('%', #{keywordForSearch}, '%')
+								AND writer LIKE '%' || #{keywordForSearch} || '%'
 							</when>
 						</choose>
 					</otherwise>
