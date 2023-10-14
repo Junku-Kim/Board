@@ -174,7 +174,7 @@
 			
 			// 페이지 번호
 			for (let i = pagination.startPage; i <= pagination.endPage; i++) {
-				const active = (i === params.page) ? 'class="active"' : '';
+				const active = (i === params.currentPage) ? 'class="active"' : '';
 				html += `<li ${active}><a href="javascrpit:void(0)" onclick="findAll(${i})">${i}</a></li> `;
 			}
 			
