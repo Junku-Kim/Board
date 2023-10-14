@@ -115,6 +115,9 @@
 					searchType: form.searchType.value
 			}
 			
+			const queryString = new URLSearchParams(params).toString();
+			const replaceUri = location.pathname + '?' + queryString;
+			history.replaceState({}, '', replaceUri);
 
 			getJson('/api/boards', params).then(response => {
 				if (!Object.keys(response).length) {
