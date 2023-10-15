@@ -150,7 +150,7 @@
 				response.list.forEach((obj, idx) => {
 					html += `
 							<tr>
-	    						<td>${startRecord--}</td>
+	    						<td>${obj.id}</td>
 	    						<td class="text-left">
 	    							<a href="javascript: void(0);" onclick="goView(${obj.id})">${obj.title}</a>
 	    						</td>
