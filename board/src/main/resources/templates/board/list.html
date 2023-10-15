@@ -61,13 +61,8 @@
 		 * 페이지 로딩 시점에 실행되는 함수
 		 */
 		window.onload = () => {
-			window.onpageshow = function (event) {
-				if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
-					location.reload();
-				}
-			}
-
-			findAll(1);
+			setQueryStringParams();
+			findAll();
 			addEnterSearchEvent();
 		}
 		
@@ -81,6 +76,26 @@
 							findAll(1);
 						}
 					});
+		}
+		
+		/*
+		* 쿼리 스트링 파라미터 세팅
+		*/
+		function setQueryStringParams() {
+			if (!location.search) {
+				return false;
+			}
+			
+			const form = document.getElementById('searchForm');
+			
+			// 쿼리 스트링은 key1=value1&key2=value2로 보통 작성되지만
+			// JavaScript에서 URLSearchParams 객체의 forEach 메소드를 사용할 때는
+			// (value, key) 순으로 매개 변수를 받는 게 컨벤션이다.
+			new URLSearchParams(location.search).forEach((value, key) => {
+				if (form[key]) {
+					form[key].value = value;
+				}
+			});
 		}
 
 		/*
@@ -106,6 +121,9 @@
 		 * 게시글 리스트 조회
 		 */
 		function findAll(currentPage) {
+			const currentPageParam = Number(new URLSearchParams(location.search).get('currentPage'));
+			currentPage = (currentPage) ? currentPage : ((currentPageParam) ? currentPageParam : 1);
+			
 			const form = document.getElementById('searchForm');
 			const params = {
 					currentPage: currentPage, 
