@@ -148,12 +148,11 @@
 				let startRecord = response.params.pagination.totalRecordCount - ((response.params.currentPage - 1) * response.params.recordPerPage);
 				
 				response.list.forEach((obj, idx) => {
+					const viewUrl = `/board/view/${obj.id}` + '?' + queryString;
 					html += `
 							<tr>
 	    						<td>${obj.id}</td>
-	    						<td class="text-left">
-	    							<a href="javascript: void(0);" onclick="goView(${obj.id})">${obj.title}</a>
-	    						</td>
+	    						<td class="text-left"><a href="${viewUrl}">${obj.title}</a></td>
 	    						<td>${obj.writer}</td>
 	    						<td>${obj.modifiedDate ? moment(obj.modifiedDate).format('YYYY-MM-DD HH:mm:ss') : moment(obj.createdDate).format('YYYY-MM-DD HH:mm:ss')}</td>
 	    						<td>${obj.hits}</td>
@@ -165,14 +164,7 @@
 				renderPageButtons(response.params);
 			});
 		}
-		
-		/*
-		* 게시글 상세 조회
-		*/
-		function goView(id) {
-			location.href = `/board/view/${id}`;
-		}
-		
+
 		/*
 		* 페이지 HTML 렌더링
 		*/
