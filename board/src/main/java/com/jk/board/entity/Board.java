@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -61,9 +62,9 @@ public class Board {
 	private LocalDateTime modifiedDate;
 	
 	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OrderBy("id ASC")
 	private List<Comment> comments;
 	
-
 	@Builder
 	public Board(String title, String content, String writer, int hits, boolean isDeleted) {
 		this.title = title;
