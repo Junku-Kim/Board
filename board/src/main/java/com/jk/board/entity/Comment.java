@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,6 +38,9 @@ public class Comment {
 	private String writer;
 	
 	@Column(nullable = false)
+	private boolean isDeleted;
+	
+	@Column(nullable = false)
 	private LocalDateTime createdDate = LocalDateTime.now();
 	
 	private LocalDateTime modifiedDate;
@@ -44,4 +48,12 @@ public class Comment {
 	@ManyToOne
 	@JoinColumn(name = "BOARD_ID")
 	private Board board;
+
+	@Builder
+	public Comment(String comment, String writer, boolean isDeleted, Board board) {
+		this.comment = comment;
+		this.writer = writer;
+		this.isDeleted = isDeleted;
+		this.board = board;
+	}
 }
