@@ -56,4 +56,15 @@ public class Comment {
 		this.isDeleted = isDeleted;
 		this.board = board;
 	}
+	
+	public void update(String comment, String writer, Board board) {
+		this.comment = comment;
+		this.writer = writer;
+		this.modifiedDate = LocalDateTime.now();
+		this.board = board;
+	}
+	
+	public void delete() {
+		this.isDeleted = true;
+	}
 }
