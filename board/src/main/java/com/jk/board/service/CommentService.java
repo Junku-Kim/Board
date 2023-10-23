@@ -10,26 +10,38 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jk.board.dto.CommentRequest;
 import com.jk.board.dto.CommentResponse;
+import com.jk.board.entity.Board;
 import com.jk.board.entity.Comment;
+import com.jk.board.repository.BoardRepository;
 import com.jk.board.repository.CommentRepository;
 
 @Service
 public class CommentService {
 
 	private final CommentRepository commentRepository;
+	private final BoardRepository boardRepository;
 
-	public CommentService(final CommentRepository commentRepository) {
+	public CommentService(final CommentRepository commentRepository, final BoardRepository boardRepository) {
 		this.commentRepository = commentRepository;
+		this.boardRepository = boardRepository;
 	}
 	
 	/*
 	 * 댓글 생성
 	 */
 	@Transactional
-	public Long writeComment(final CommentRequest commentRequest) {
-		Comment comment = commentRepository.save(commentRequest.toEntity());
+	public Long writeComment(final Long boardId, final CommentRequest commentRequest) {
+		Optional<Board> boardOptional = boardRepository.findById(boardId);
 		
-		return comment.getId();
+		if (boardOptional.isPresent()) {
+			Comment comment = commentRequest.toEntity();
+			comment.setBoard(boardOptional.get());
+			Comment savedComment = commentRepository.save(comment);
+			
+			return savedComment.getId();
+		} else {
+			return 0L;
+		}
 	}
 	
 	/*

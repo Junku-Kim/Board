@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +24,7 @@ import lombok.NoArgsConstructor;
 		allocationSize = 1
 		)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "COMMENTS")
 @Entity
 public class Comment {
 
@@ -31,7 +33,7 @@ public class Comment {
 	@Column(name = "COMMENT_ID")
 	private Long id;
 	
-	@Column(nullable = false, columnDefinition = "CLOB")
+	@Column(name = "COMMENTS", nullable = false, columnDefinition = "CLOB")
 	private String comment;
 	
 	@Column(nullable = false)
@@ -46,9 +48,13 @@ public class Comment {
 	private LocalDateTime modifiedDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "BOARD_ID")
+	@JoinColumn(name = "BOARD_ID", nullable = false)
 	private Board board;
 
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+	
 	@Builder
 	public Comment(String comment, String writer, boolean isDeleted, Board board) {
 		this.comment = comment;

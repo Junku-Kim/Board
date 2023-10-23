@@ -61,9 +61,9 @@ public class Board {
 	
 	private LocalDateTime modifiedDate;
 	
-	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	@OrderBy("id ASC")
-	private List<Comment> comments;
+//	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+//	@OrderBy("id ASC")
+//	private List<Comment> comments;
 	
 	@Builder
 	public Board(String title, String content, String writer, int hits, boolean isDeleted) {
