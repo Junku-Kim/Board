@@ -50,11 +50,10 @@ public class Board {
 	@Column(nullable = false)
 	private String writer;
 	
-	@Column(nullable = false)
 	private int hits;
 	
 	@Column(nullable = false)
-	private boolean isDeleted;
+	private Boolean isDeleted;
 	
 	@Column(nullable = false)
 	private LocalDateTime createdDate = LocalDateTime.now();

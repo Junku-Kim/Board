@@ -16,7 +16,7 @@ public class CommentResponse {
 	private Long id;
 	private String comment;
 	private String writer;
-	private boolean isDeleted;
+	private Boolean isDeleted;
 	private LocalDateTime createdDate;
 	private LocalDateTime modifiedDate;
 	private Board board;
@@ -25,7 +25,7 @@ public class CommentResponse {
 		this.id = comment.getId();
 		this.comment = comment.getComment();
 		this.writer = comment.getWriter();
-		this.isDeleted = comment.isDeleted();
+		this.isDeleted = comment.getIsDeleted();
 		this.createdDate = comment.getCreatedDate();
 		this.modifiedDate = comment.getModifiedDate();
 		this.board = comment.getBoard();

@@ -13,7 +13,7 @@ public class CommentRequest {
 
 	private String comment;
 	private String writer;
-	private boolean isDeleted;
+	private Boolean isDeleted;
 	private Board board;
 	
 	public Comment toEntity() {
