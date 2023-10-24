@@ -40,7 +40,7 @@ public class Comment {
 	private String writer;
 	
 	@Column(nullable = false)
-	private boolean isDeleted;
+	private Boolean isDeleted;
 	
 	@Column(nullable = false)
 	private LocalDateTime createdDate = LocalDateTime.now();

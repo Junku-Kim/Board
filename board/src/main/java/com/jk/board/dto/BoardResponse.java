@@ -17,7 +17,7 @@ public class BoardResponse {
     private String content;
     private String writer;
     private int hits;
-    private boolean isDeleted;
+    private Boolean isDeleted;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     
@@ -27,7 +27,7 @@ public class BoardResponse {
         this.content = board.getContent();
         this.writer = board.getWriter();
         this.hits = board.getHits();
-        this.isDeleted = board.isDeleted();
+        this.isDeleted = board.getIsDeleted();
         this.createdDate = board.getCreatedDate();
         this.modifiedDate = board.getModifiedDate();
     }
