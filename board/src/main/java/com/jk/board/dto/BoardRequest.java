@@ -13,7 +13,11 @@ public class BoardRequest {
 	private String title;
 	private String content;
 	private String writer;
-	private Boolean isDeleted;
+	private boolean isDeleted;
+	
+	public boolean getIsDeleted() {
+		return this.isDeleted;
+	}
 	
 	public Board toEntity() {
 		return Board.builder()

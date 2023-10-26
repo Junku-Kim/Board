@@ -52,8 +52,11 @@ public class Board {
 	
 	private int hits;
 	
-	@Column(nullable = false)
-	private Boolean isDeleted;
+	private boolean isDeleted;
+	
+	public boolean getIsDeleted() {
+		return this.isDeleted;
+	}
 	
 	@Column(nullable = false)
 	private LocalDateTime createdDate = LocalDateTime.now();

@@ -17,7 +17,7 @@ public class BoardResponse {
     private String content;
     private String writer;
     private int hits;
-    private Boolean isDeleted;
+    private boolean isDeleted;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     
@@ -30,5 +30,9 @@ public class BoardResponse {
         this.isDeleted = board.getIsDeleted();
         this.createdDate = board.getCreatedDate();
         this.modifiedDate = board.getModifiedDate();
+    }
+    
+    public boolean getIsDeleted() {
+    	return this.isDeleted;
     }
 }
