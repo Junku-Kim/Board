@@ -1,6 +1,5 @@
 package com.jk.board.dto;
 
-import com.jk.board.entity.Board;
 import com.jk.board.entity.Comment;
 
 import lombok.AccessLevel;
@@ -14,14 +13,12 @@ public class CommentRequest {
 	private String comment;
 	private String writer;
 	private boolean isDeleted;
-	private Board board;
 	
 	public Comment toEntity() {
 		return Comment.builder()
 					  .comment(comment)
 					  .writer(writer)
 					  .isDeleted(isDeleted)
-					  .board(board)
 					  .build();
 	}
 	

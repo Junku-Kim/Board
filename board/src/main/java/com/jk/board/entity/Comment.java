@@ -59,18 +59,16 @@ public class Comment {
 	}
 	
 	@Builder
-	public Comment(String comment, String writer, boolean isDeleted, Board board) {
+	public Comment(String comment, String writer, boolean isDeleted) {
 		this.comment = comment;
 		this.writer = writer;
 		this.isDeleted = isDeleted;
-		this.board = board;
 	}
 	
-	public void update(String comment, String writer, Board board) {
+	public void update(String comment, String writer) {
 		this.comment = comment;
 		this.writer = writer;
 		this.modifiedDate = LocalDateTime.now();
-		this.board = board;
 	}
 	
 	public void delete() {
