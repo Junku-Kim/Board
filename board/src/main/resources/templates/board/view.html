@@ -49,14 +49,14 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="commentText" class="col-sm-2 control-label">댓글 작성</label>
+					<label for="commentText" class="col-sm-2 control-label">댓글</label>
 					<div class="col-sm-9">
 						<textarea class="form-control" id="commentText" rows="3" placeholder="댓글 내용"></textarea>
 					</div>
 				</div>
 				
 				<div class="btn_wrap text-right col-sm-11">
-					<button type="submit" class="btn btn-primary">댓글 작성</button>
+					<button type="button" onclick="writeComment();" class="btn btn-primary waves-effect waves-light">작성하기</button>
 				</div>
 			</form>
 		</div>
@@ -143,6 +143,37 @@
 				goListWithReplace();
 			}).catch(error => {
 				alert('오류가 발생했습니다.')
+			});
+		}
+		
+		/*
+		* 댓글 등록
+		*/
+		function writeComment() {
+			const commentForm = document.getElementById('commentForm');
+			const params = {
+				writer: commentForm.commentWriter.value,
+				comment: commentForm.commentText.value,
+				isDeleted: false
+			};
+			const id = /*[[ ${id} ]]*/ 0;
+			const uri = `/api/boards/${id}/comments`;
+			const method = 'POST';
+			
+			fetch(uri, {
+				method: method,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(params)
+			}).then(response => {
+				if (!response.ok) {
+					throw new Error('Request failed...');
+				}
+				
+				alert('댓글이 작성되었습니다.');
+			}).catch(error => {
+				alert('댓글 작성에서 오류가 발생하였습니다.');
 			});
 		}
 		

@@ -53,7 +53,7 @@ public class CommentService {
 		
 		if (commentOptional.isPresent()) {
 			Comment comment = commentOptional.get();
-			comment.update(commentRequest.getComment(), commentRequest.getWriter(), commentRequest.getBoard());
+			comment.update(commentRequest.getComment(), commentRequest.getWriter());
 			
 			return id;
 		} else {
