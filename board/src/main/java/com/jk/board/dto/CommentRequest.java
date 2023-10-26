@@ -13,7 +13,7 @@ public class CommentRequest {
 
 	private String comment;
 	private String writer;
-	private Boolean isDeleted;
+	private boolean isDeleted;
 	private Board board;
 	
 	public Comment toEntity() {
@@ -23,5 +23,9 @@ public class CommentRequest {
 					  .isDeleted(isDeleted)
 					  .board(board)
 					  .build();
+	}
+	
+	public boolean getIsDeleted() {
+		return this.isDeleted;
 	}
 }
