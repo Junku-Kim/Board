@@ -147,9 +147,35 @@
 		}
 		
 		/*
+		* 댓글 유효성 검사
+		*/
+		function isValid() {
+			const commentForm = document.getElementById('commentForm');
+			
+			if (!commentForm.commentWriter.value.trim()) {
+				alert('댓글 작성자를 입력해주세요.');
+				commentForm.commentWriter.value='';
+				commentForm.commentWriter.focus();
+				return false;
+			}
+			
+			if (!commentForm.commentText.value.trim()) {
+				alert('댓글 내용을 입력해주세요.');
+				commentForm.commentText.value='';
+				commentForm.commentText.focus();
+				return false;
+			}
+			
+			return true;
+		}
+		/*
 		* 댓글 등록
 		*/
 		function writeComment() {
+			if (!isValid()) {
+				return false;
+			}
+			
 			const commentForm = document.getElementById('commentForm');
 			const params = {
 				writer: commentForm.commentWriter.value,
