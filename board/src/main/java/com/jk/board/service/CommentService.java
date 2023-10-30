@@ -1,5 +1,6 @@
 package com.jk.board.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,11 +84,17 @@ public class CommentService {
 	/*
 	 * 게시글 리스트 조회
 	 */
-	public List<CommentResponse> findAllBoards() {
-		Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
-		List<Comment> list = commentRepository.findAll(sort);
+	public List<CommentResponse> findAllComments(final Long boardId) {
+		Optional<Board> boardOptional = boardRepository.findById(boardId);
 		
-		return list.stream().map(CommentResponse::new).toList();
+		if (boardOptional.isPresent()) {
+			Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
+			List<Comment> list = commentRepository.findAllByBoard(boardOptional.get(), sort);
+			
+			return list.stream().map(CommentResponse::new).toList();
+		} else {
+			return Collections.emptyList();
+		}
 	}
 	
 	/*
