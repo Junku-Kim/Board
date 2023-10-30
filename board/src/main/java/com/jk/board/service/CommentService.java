@@ -1,6 +1,5 @@
 package com.jk.board.service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +12,8 @@ import com.jk.board.dto.CommentRequest;
 import com.jk.board.dto.CommentResponse;
 import com.jk.board.entity.Board;
 import com.jk.board.entity.Comment;
+import com.jk.board.exception.CustomException;
+import com.jk.board.exception.ErrorCode;
 import com.jk.board.repository.BoardRepository;
 import com.jk.board.repository.CommentRepository;
 
@@ -32,17 +33,13 @@ public class CommentService {
 	 */
 	@Transactional
 	public Long writeComment(final Long boardId, final CommentRequest commentRequest) {
-		Optional<Board> boardOptional = boardRepository.findById(boardId);
-		
-		if (boardOptional.isPresent()) {
-			Comment comment = commentRequest.toEntity();
-			comment.setBoard(boardOptional.get());
-			Comment savedComment = commentRepository.save(comment);
-			
-			return savedComment.getId();
-		} else {
-			return 0L;
-		}
+		Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+
+		Comment comment = commentRequest.toEntity();
+		comment.setBoard(board);
+		Comment savedComment = commentRepository.save(comment);
+
+		return savedComment.getId();
 	}
 	
 	/*
@@ -85,16 +82,12 @@ public class CommentService {
 	 * 게시글 리스트 조회
 	 */
 	public List<CommentResponse> findAllComments(final Long boardId) {
-		Optional<Board> boardOptional = boardRepository.findById(boardId);
+		Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
 		
-		if (boardOptional.isPresent()) {
-			Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
-			List<Comment> list = commentRepository.findAllByBoard(boardOptional.get(), sort);
-			
-			return list.stream().map(CommentResponse::new).toList();
-		} else {
-			return Collections.emptyList();
-		}
+		List<Comment> list = commentRepository.findAllByBoard(board, sort);
+
+		return list.stream().map(CommentResponse::new).toList();
 	}
 	
 	/*

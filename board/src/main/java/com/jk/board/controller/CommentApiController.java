@@ -1,9 +1,7 @@
 package com.jk.board.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,15 +27,8 @@ public class CommentApiController {
 	 * 댓글 생성
 	 */
 	@PostMapping("/boards/{boardId}/comments")
-	public ResponseEntity<CommentResponse> writeComment(@PathVariable final Long boardId, @RequestBody final CommentRequest commentRequest) {
-		Long commentId = commentService.writeComment(boardId ,commentRequest);
-		Optional<CommentResponse> commentResponseOptional = commentService.findCommentById(commentId);
-		
-		if (commentResponseOptional.isPresent()) {
-			return ResponseEntity.ok(commentResponseOptional.get());
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+	public Long writeComment(@PathVariable final Long boardId, @RequestBody final CommentRequest commentRequest) {
+		return commentService.writeComment(boardId ,commentRequest);
 	}
 	
 	/*
