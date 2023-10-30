@@ -1,8 +1,10 @@
 package com.jk.board.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,5 +38,13 @@ public class CommentApiController {
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+	}
+	
+	/*
+	 * 댓글 리스트 조회
+	 */
+	@GetMapping("/boards/{boardId}/comments")
+	public List<CommentResponse> findAllComments(@PathVariable final Long boardId) {
+		return commentService.findAllComments(boardId);
 	}
 }
