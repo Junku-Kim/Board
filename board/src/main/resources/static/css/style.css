@@ -1309,6 +1309,8 @@ Version 1.0
   border-radius: 2px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
+  word-wrap: break-word;
+  background-color:rgba(192, 192, 192, 0.15);
 }
 .form-control.input-sm {
   padding: 0 10px;
@@ -1470,6 +1472,8 @@ textarea.form-control {
 	-moz-appearance: none;
 	appearance: none;
 }
+
+
 /*
  * end of file css
  */
