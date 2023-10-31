@@ -3,7 +3,14 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-      
+
+<head>
+	<style>
+		.form-control {
+		  background-color: transparent;
+		}
+	</style>
+</head>
 	<th:block layout:fragment="content">
 		<div class="card-content">
 			<form id = "form" class="form-horizontal">
