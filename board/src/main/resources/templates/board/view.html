@@ -210,6 +210,7 @@
 				}
 				
 				alert('댓글이 작성되었습니다.');
+				findAllComments();
 			}).catch(error => {
 				alert('댓글 작성에서 오류가 발생하였습니다.');
 			});
@@ -254,7 +255,7 @@
 									<div class="form-group">
 										<label for="commentWriter" class="col-sm-2 control-label">댓글</label>
 										<div class="col-sm-9">
-											<span class="form-control" style="background-color: rgba(192, 192, 192, 0.15);">${obj.comment}</span>
+											<span class="form-control text-left">${obj.comment}</span>
 										</div>
 									</div>
 									
