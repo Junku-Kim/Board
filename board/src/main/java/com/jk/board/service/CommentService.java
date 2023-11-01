@@ -66,16 +66,10 @@ public class CommentService {
 	 */
 	@Transactional
 	public Long deleteComment(final Long id) {
-		Optional<Comment> commentOptional = commentRepository.findById(id);
+		Comment comment = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		comment.delete();
 		
-		if (commentOptional.isPresent()) {
-			Comment comment = commentOptional.get();
-			comment.delete();
-			
-			return id;
-		} else {
-			return 0L;
-		}
+		return comment.getId();
 	}
 	
 	/*

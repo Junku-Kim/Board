@@ -2,6 +2,7 @@ package com.jk.board.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +38,13 @@ public class CommentApiController {
 	@GetMapping("/boards/{boardId}/comments")
 	public List<CommentResponse> findAllComments(@PathVariable final Long boardId) {
 		return commentService.findAllComments(boardId);
+	}
+	
+	/*
+	 * 댓글 삭제
+	 */
+	@DeleteMapping("/boards/{boardId}/comments/{id}")
+	public Long deleteComment(@PathVariable final Long boardId, @PathVariable final Long id) {
+		return commentService.deleteComment(id);
 	}
 }
