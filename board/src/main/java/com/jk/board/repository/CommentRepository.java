@@ -10,5 +10,5 @@ import com.jk.board.entity.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-	public List<Comment> findAllByBoard(Board board, Sort sort);
+	public List<Comment> findAllByBoardAndIsDeleted(Board board, boolean isDeleted, Sort sort);
 }
