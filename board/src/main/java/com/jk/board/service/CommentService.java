@@ -79,7 +79,7 @@ public class CommentService {
 		Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		Sort sort = Sort.by(Direction.DESC, "id", "createdDate");
 		
-		List<Comment> list = commentRepository.findAllByBoard(board, sort);
+		List<Comment> list = commentRepository.findAllByBoardAndIsDeleted(board, false, sort);
 
 		return list.stream().map(CommentResponse::new).toList();
 	}
