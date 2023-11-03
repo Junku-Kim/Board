@@ -47,18 +47,10 @@ public class CommentService {
 	 */
 	@Transactional
 	public Long updateComment(final Long id, final CommentRequest commentRequest) {
-		Optional<Comment> commentOptional = commentRepository.findById(id);
+		Comment comment = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		comment.update(commentRequest.getComment(), commentRequest.getWriter());
 		
-		if (commentOptional.isPresent()) {
-			Comment comment = commentOptional.get();
-			comment.update(commentRequest.getComment(), commentRequest.getWriter());
-			
-			return id;
-		} else {
-			// Oracle 시퀀스 기반으로 작동하기 때문에 절대 0 이하로 값이 나올 수 없다.
-			// 댓글은 게시글의 부가기능이기 때문에 댓글에서 예외를 날려서 게시글이 로드가 되지 않으면 안된다.
-			return 0L;
-		}
+		return id;
 	}
 	
 	/*
