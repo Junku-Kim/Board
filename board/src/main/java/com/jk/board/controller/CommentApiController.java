@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,10 +42,17 @@ public class CommentApiController {
 	}
 	
 	/*
+	 * 댓글 수정
+	 */
+	@PatchMapping("/boards/{boardId}/comments/{id}")
+	public Long updateComment(@PathVariable final Long id, @RequestBody final CommentRequest commentRequest) {
+		return commentService.updateComment(id, commentRequest);
+	}
+	/*
 	 * 댓글 삭제
 	 */
 	@DeleteMapping("/boards/{boardId}/comments/{id}")
-	public Long deleteComment(@PathVariable final Long boardId, @PathVariable final Long id) {
+	public Long deleteComment(@PathVariable final Long id) {
 		return commentService.deleteComment(id);
 	}
 }
