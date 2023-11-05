@@ -48,11 +48,20 @@ public class CommentApiController {
 	public Long updateComment(@PathVariable final Long id, @RequestBody final CommentRequest commentRequest) {
 		return commentService.updateComment(id, commentRequest);
 	}
+	
 	/*
 	 * 댓글 삭제
 	 */
 	@DeleteMapping("/boards/{boardId}/comments/{id}")
 	public Long deleteComment(@PathVariable final Long id) {
 		return commentService.deleteComment(id);
+	}
+	
+	/*
+	 * 댓글 상세 정보 조회
+	 */
+	@GetMapping("/boards/{boardId}/comments/{id}")
+	public CommentResponse findCommentById(@PathVariable final Long id) {
+		return commentService.findCommentById(id);
 	}
 }

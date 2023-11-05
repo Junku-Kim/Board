@@ -1,7 +1,6 @@
 package com.jk.board.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -61,7 +60,7 @@ public class CommentService {
 		Comment comment = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		comment.delete();
 		
-		return comment.getId();
+		return id;
 	}
 	
 	/*
@@ -80,7 +79,9 @@ public class CommentService {
 	 * 댓글 상세정보 조회
 	 */
 	@Transactional
-	public Optional<CommentResponse> findCommentById(final Long id) {
-		return commentRepository.findById(id).map(CommentResponse::new);
+	public CommentResponse findCommentById(final Long id) {
+		Comment comment = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		
+		return new CommentResponse(comment); 
 	}
 }
