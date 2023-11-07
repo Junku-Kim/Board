@@ -1310,7 +1310,7 @@ Version 1.0
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   word-wrap: break-word;
-  background-color:rgba(192, 192, 192, 0.15);
+  background-color:rgba(192, 192, 192, 0.3);
 }
 .form-control.input-sm {
   padding: 0 10px;
