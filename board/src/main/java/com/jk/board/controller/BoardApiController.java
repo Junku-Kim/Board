@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.board.dto.BoardRequest;
 import com.jk.board.dto.BoardResponse;
-import com.jk.board.paging.CommonParams;
+import com.jk.board.paging.BoardCommonParams;
 import com.jk.board.service.BoardService;
 
 @RequestMapping("/api")
@@ -54,7 +54,7 @@ public class BoardApiController {
 	 * 게시글 리스트 조회
 	 */
 	@GetMapping("/boards")
-	public Map<String, Object> findBoards(final CommonParams params) {
+	public Map<String, Object> findBoards(final BoardCommonParams params) {
 		return boardService.findAllBoards(params);
 	}
 

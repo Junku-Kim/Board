@@ -13,14 +13,14 @@ public class Pagination {
 	private boolean existPrevPage;
 	private boolean existNextPage;
 	
-	public Pagination(int totalRecordCount, CommonParams params) {
+	public Pagination(int totalRecordCount, BoardCommonParams params) {
 		if (totalRecordCount > 0) {
 			this.totalRecordCount = totalRecordCount;
 			this.calculation(params);
 		}
 	}
 
-	private void calculation(CommonParams params) {
+	private void calculation(BoardCommonParams params) {
 		totalPageCount = ((totalRecordCount - 1) / params.getRecordPerPage()) + 1;
 		
 		if (params.getCurrentPage() > totalPageCount) {
