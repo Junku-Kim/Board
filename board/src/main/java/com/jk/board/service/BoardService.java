@@ -14,7 +14,7 @@ import com.jk.board.entity.Board;
 import com.jk.board.exception.CustomException;
 import com.jk.board.exception.ErrorCode;
 import com.jk.board.mapper.BoardMapper;
-import com.jk.board.paging.CommonParams;
+import com.jk.board.paging.BoardCommonParams;
 import com.jk.board.paging.Pagination;
 import com.jk.board.repository.BoardRepository;
 
@@ -65,7 +65,7 @@ public class BoardService {
 	/*
 	 * 게시글 리스트 조회 (페이지네이션)
 	 */
-	public Map<String, Object> findAllBoards(final CommonParams params) {
+	public Map<String, Object> findAllBoards(final BoardCommonParams params) {
 		int count = boardMapper.countBoard(params);
 
 		if (count < 1) {

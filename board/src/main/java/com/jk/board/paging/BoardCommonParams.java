@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CommonParams {
+public class BoardCommonParams {
 
 	private int currentPage;
 	private int recordPerPage;

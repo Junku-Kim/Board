@@ -49,7 +49,7 @@
 	</sql>
 	
 	<!-- 게시글 수 조회 -->
-	<select id="countBoard" parameterType="com.jk.board.paging.CommonParams" resultType="int">
+	<select id="countBoard" parameterType="com.jk.board.paging.BoardCommonParams" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
@@ -58,7 +58,7 @@
 	</select>
 	
 	<!-- 게시글 리스트 조회 -->
-	<select id="findAllBoards" parameterType="com.jk.board.paging.CommonParams" resultMap="BoardResultMap">
+	<select id="findAllBoards" parameterType="com.jk.board.paging.BoardCommonParams" resultMap="BoardResultMap">
 		SELECT
 			board_id
 			, title
