@@ -2,6 +2,8 @@ package com.jk.board.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -64,7 +66,7 @@ public class CommentService {
 	}
 	
 	/*
-	 * 게시글 리스트 조회
+	 * 댓글 리스트 조회
 	 */
 	public List<CommentResponse> findAllComments(final Long boardId) {
 		Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
@@ -73,6 +75,15 @@ public class CommentService {
 		List<Comment> list = commentRepository.findAllByBoardAndIsDeleted(board, false, sort);
 
 		return list.stream().map(CommentResponse::new).toList();
+	}
+	
+	/*
+	 * 댓글 리스트 조회(Page, Pageable)
+	 */
+	public Page<CommentResponse> findAllComments(final Long boardId, final Pageable pageable) {
+		Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		
+		return commentRepository.findAllByBoard(board, pageable).map(CommentResponse::new);
 	}
 	
 	/*
