@@ -83,7 +83,7 @@ public class CommentService {
 	public Page<CommentResponse> findAllComments(final Long boardId, final Pageable pageable) {
 		Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		
-		return commentRepository.findAllByBoard(board, pageable).map(CommentResponse::new);
+		return commentRepository.findAllByBoardAndIsDeleted(board, false, pageable).map(CommentResponse::new);
 	}
 	
 	/*

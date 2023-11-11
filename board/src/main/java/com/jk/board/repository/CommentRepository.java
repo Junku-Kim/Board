@@ -14,5 +14,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 	public List<Comment> findAllByBoardAndIsDeleted(Board board, boolean isDeleted, Sort sort);
 	
-	public Page<Comment> findAllByBoard(Board board, Pageable pageable);
+	public Page<Comment> findAllByBoardAndIsDeleted(Board board, boolean isDeleted, Pageable pageable);
 }
