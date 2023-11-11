@@ -71,6 +71,12 @@
 		
 		</div>
 		
+		<!-- 댓글 Pagination 영역-->
+		<nav aria-label="Page navigation" class="text-center">
+			<ul class="pagination">
+				
+			</ul>
+		</nav>		
     </div>
     </th:block>
 
@@ -221,9 +227,12 @@
 		/*
 		* 게시글 리스트 조회
 		*/
-		function findAllComments() {
+		function findAllComments(pageNumber) {
 			const id = /*[[ ${id} ]]*/ 0;
-			const url = `/api/boards/${id}/comments`;
+			const pageNumberParam = Number(new URLSearchParams(location.search).get('page'));
+			pageNumber = (pageNumber) ? pageNumber : ((pageNumberParam) ? pageNumberParam : 0); 
+			console.log(pageNumber);
+			const url = `/api/boards/${id}/comments?page=${pageNumber}`;
 			
 			fetch(url).then(response => {
 				if (!response.ok) {
@@ -233,15 +242,18 @@
 				return response.json();
 			}).then(page => {
 				
-				json = page.content;
+				comment = page.content;
 				
-				if (json.length == 0) {
+				if (comment.length == 0) {
 					document.querySelector('.comment-list').innerHTML = '<p style="margin-bottom: 20px; margin-top: 20px;">등록된 댓글이 없습니다.</p>';
 
 				} else {
-					createCommentList(json);
+					createCommentList(comment);
 				}
+				
+				renderPageButtons(page);
 			}).catch(error => {
+				console.log(error);
 				alert('댓글을 찾을 수 없습니다.');
 			});
 		}
@@ -312,7 +324,52 @@
 				alert('댓글 삭제 중 오류가 발생했습니다.')
 			});
 		}
-		
+
+		/*
+		* 페이지 HTML 렌더링
+		*/
+		function renderPageButtons(page) {
+			let html = '';
+			const offset = page.pageable.offset;
+			const pageNumber = page.pageable.pageNumber;
+			const pageSize = page.pageable.pageSize;
+			const totalElements = page.totalElements;
+			
+			// 0부터 시작하기 때문에 개수를 하나 줄여서 계산합니다.
+			const totalPages = page.totalPages - 1;
+			const startPage = Math.floor(pageNumber / pageSize) * pageSize;
+			let endPage = startPage + pageSize - 1;
+			if (endPage > totalPages) {
+				endPage = totalPages;
+			}
+			
+			const existPrevPage = startPage != 0;
+			const existNextPage = ((endPage + 1) * pageSize) < totalElements;
+			
+			// 첫 페이지, 이전 페이지
+			if (existPrevPage) {
+				html += `
+						<li><a href="javascrpit:void(0)" onclick="findAllComments(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a><li>
+						<li><a href="javascript:void(0)" onclick="findAllComments(${startPage-1})" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a></li>
+				`;
+			}
+			
+			// 페이지 번호
+			for (let i = startPage; i <= endPage; i++) {
+				const active = (i === pageNumber) ? 'class="active"' : '';
+				html += `<li ${active}><a href="javascrpit:void(0)" onclick="findAllComments(${i})">${i+1}</a></li> `;
+			}
+			// 다음 페이지, 마지막 페이지
+			if (existNextPage) {
+				html += `
+						<li><a href="javascript:void(0)" onclick="findAllComments(${endPage+1})" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a></li>
+						<li><a href="javascript:void(0)" onclick="findAllComments(${totalPages})" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+				`;
+			}
+			
+			document.querySelector('.pagination').innerHTML = html;
+		}
+				
 	/*]]>*/
 	</script>
 	</th:block>

@@ -1,7 +1,5 @@
 package com.jk.board.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -40,11 +38,6 @@ public class CommentApiController {
 	/*
 	 * 댓글 리스트 조회
 	 */
-//	@GetMapping("/boards/{boardId}/comments")
-//	public List<CommentResponse> findAllComments(@PathVariable final Long boardId) {
-//		return commentService.findAllComments(boardId);
-//	}
-	
 	@GetMapping("/boards/{boardId}/comments")
 	public Page<CommentResponse> findAllComments(@PathVariable final Long boardId,
 												 @PageableDefault(page = 0, size = 5, sort="id", direction=Sort.Direction.DESC) final Pageable pageable) {
