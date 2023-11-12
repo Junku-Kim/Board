@@ -329,6 +329,12 @@
 		* 페이지 HTML 렌더링
 		*/
 		function renderPageButtons(page) {
+			
+			if (!page) {
+				document.querySelector('.pagination').innerHTML = '';
+				throw new Error('Missing required parameters...');
+			}
+			
 			let html = '';
 			const offset = page.pageable.offset;
 			const pageNumber = page.pageable.pageNumber;
@@ -368,6 +374,15 @@
 			}
 			
 			document.querySelector('.pagination').innerHTML = html;
+			
+			const urlSearchParams = new URLSearchParams(location.search);
+			urlSearchParams.set('page', pageNumber);
+			
+			const updatedQuery = urlSearchParams.toString();
+			
+			const updatedUrl = location.pathname + '?' + updatedQuery;
+			
+			history.replaceState({}, '', updatedUrl);			
 		}
 				
 	/*]]>*/
