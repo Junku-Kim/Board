@@ -230,8 +230,7 @@
 		function findAllComments(pageNumber) {
 			const id = /*[[ ${id} ]]*/ 0;
 			const pageNumberParam = Number(new URLSearchParams(location.search).get('page'));
-			pageNumber = (pageNumber) ? pageNumber : ((pageNumberParam) ? pageNumberParam : 0); 
-			console.log(pageNumber);
+			pageNumber = (pageNumber || pageNumber === 0) ? pageNumber : ((pageNumberParam) ? pageNumberParam : 0); 
 			const url = `/api/boards/${id}/comments?page=${pageNumber}`;
 			
 			fetch(url).then(response => {
@@ -355,15 +354,18 @@
 			// 첫 페이지, 이전 페이지
 			if (existPrevPage) {
 				html += `
-						<li><a href="javascrpit:void(0)" onclick="findAllComments(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a><li>
+						<li><a href="javascript:void(0)" onclick="findAllComments(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a><li>
 						<li><a href="javascript:void(0)" onclick="findAllComments(${startPage-1})" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a></li>
 				`;
 			}
 			
 			// 페이지 번호
 			for (let i = startPage; i <= endPage; i++) {
-				const active = (i === pageNumber) ? 'class="active"' : '';
-				html += `<li ${active}><a href="javascrpit:void(0)" onclick="findAllComments(${i})">${i+1}</a></li> `;
+				if (i === pageNumber) {
+					html += `<li class="active"><a href="javascript:void(0)">${i+1}</a></li> `;
+				} else {
+					html += `<li><a href="javascript:void(0)" onclick="findAllComments(${i})">${i+1}</a></li> `;
+				}
 			}
 			// 다음 페이지, 마지막 페이지
 			if (existNextPage) {
