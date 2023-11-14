@@ -218,7 +218,7 @@
 				alert('댓글이 작성되었습니다.');
 				commentForm.commentWriter.value = '';
         		commentForm.commentText.value = '';
-				findAllComments();
+				findAllComments(0);
 			}).catch(error => {
 				alert('댓글 작성에서 오류가 발생하였습니다.');
 			});
