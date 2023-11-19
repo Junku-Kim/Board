@@ -1,5 +1,9 @@
 package com.jk.board.dto;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.jk.board.entity.Board;
 
 import lombok.AccessLevel;
@@ -18,6 +22,8 @@ public class BoardRequest {
 	public boolean getIsDeleted() {
 		return this.isDeleted;
 	}
+	
+	private List<MultipartFile> multipartFiles;
 	
 	public Board toEntity() {
 		return Board.builder()
