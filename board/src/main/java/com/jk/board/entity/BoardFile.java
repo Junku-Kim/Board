@@ -29,8 +29,8 @@ import lombok.NoArgsConstructor;
 		allocationSize = 1
 		)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "BOARD_FILE")
-public class File {
+@Entity()
+public class BoardFile {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOARD_FILE_ID_SEQ_GENERATOR")
@@ -73,7 +73,7 @@ public class File {
 	}
 
 	@Builder
-	public File(String originalName, String savedName, String uploadDir, String extension, long size,
+	public BoardFile(String originalName, String savedName, String uploadDir, String extension, long size,
 			String contentType, boolean isDeleted) {
 		this.originalName = originalName;
 		this.savedName = savedName;
