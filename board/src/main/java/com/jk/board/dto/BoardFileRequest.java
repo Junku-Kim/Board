@@ -1,7 +1,7 @@
 package com.jk.board.dto;
 
 import com.jk.board.entity.Board;
-import com.jk.board.entity.File;
+import com.jk.board.entity.BoardFile;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FileRequest {
+public class BoardFileRequest {
 
 	private Long id;
 	private String originalName;
@@ -26,7 +26,7 @@ public class FileRequest {
 	}
 
 	@Builder
-	public FileRequest(String originalName, String savedName, String uploadDir, String extension, long size,
+	public BoardFileRequest(String originalName, String savedName, String uploadDir, String extension, long size,
 			String contentType) {
 		this.originalName = originalName;
 		this.savedName = savedName;
@@ -36,8 +36,8 @@ public class FileRequest {
 		this.contentType = contentType;
 	}
 	
-	public File toEntity() {
-		return File.builder()
+	public BoardFile toEntity() {
+		return BoardFile.builder()
 				.originalName(originalName)
 				.savedName(savedName)
 				.uploadDir(uploadDir)

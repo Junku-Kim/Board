@@ -18,37 +18,48 @@ import com.jk.board.paging.BoardCommonParams;
 import com.jk.board.paging.Pagination;
 import com.jk.board.repository.BoardRepository;
 
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Service
 public class BoardService {
 
 	private final BoardRepository boardRepository;
 	private final BoardMapper boardMapper;
 	
-	public BoardService(final BoardRepository boardRepository, final BoardMapper boardMapper) {
-		this.boardRepository = boardRepository;
-		this.boardMapper = boardMapper;
-	}
+	private final BoardFileService boardFileService;
 	
 	/*
 	 * 게시글 생성
 	 */
 	@Transactional
-	public Long writeBoard(final BoardRequest boardRequest) {
+	public Long writeBoard(final BoardRequest boardRequest) throws Exception {
 		Board board = boardRepository.save(boardRequest.toEntity());
+		Long id = board.getId();
 		
-		return board.getId();
+		saveFiles(id, boardRequest);
+		
+		return id;
 	}
 	
 	/*
 	 * 게시글 수정
 	 */
 	@Transactional
-	public Long updateBoard(final Long id, final BoardRequest boardRequest) {
+	public Long updateBoard(final Long id, final BoardRequest boardRequest) throws Exception {
 		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		board.update(boardRequest.getTitle(), boardRequest.getContent(), boardRequest.getWriter());
 		
+		saveFiles(id, boardRequest);
+		
 		return id;
+	}
+	
+	/*
+	 * 파일 저장
+	 */
+	private void saveFiles(final Long id, final BoardRequest boardRequest) throws Exception {
+		boardFileService.saveFiles(id, boardRequest);
 	}
 	
 	/*

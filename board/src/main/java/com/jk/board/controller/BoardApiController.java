@@ -30,7 +30,7 @@ public class BoardApiController {
 	 * 게시글 생성
 	 */
 	@PostMapping("/boards")
-	public Long writeBoard(@RequestBody final BoardRequest boardRequest) {
+	public Long writeBoard(@RequestBody final BoardRequest boardRequest) throws Exception {
 		return boardService.writeBoard(boardRequest);
 	}
 
@@ -38,7 +38,7 @@ public class BoardApiController {
 	 * 게시글 수정
 	 */
 	@PatchMapping("/boards/{id}")
-	public Long updateBoard(@PathVariable final Long id, @RequestBody final BoardRequest boardRequest) {
+	public Long updateBoard(@PathVariable final Long id, @RequestBody final BoardRequest boardRequest) throws Exception {
 		return boardService.updateBoard(id, boardRequest);
 	}
 	
