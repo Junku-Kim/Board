@@ -13,27 +13,34 @@
 </head>
 	<th:block layout:fragment="content">
 		<div class="card-content">
-			<form id = "form" class="form-horizontal">
+			<form id = "form" class="form-horizontal" enctype="multipart/form-data">
 				<div class="form-group">
 					<label for="title" class="col-sm-2 control-label">제목</label>
 					<div class="col-sm-10">
-						<input type="text" id="title" class="form-control" placeholder="제목을 입력해 주세요." />
+						<input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력해 주세요." />
 					</div>
 				</div>
 	
 				<div class="form-group">
 					<label for="writer" class="col-sm-2 control-label">이름</label>
 					<div class="col-sm-10">
-						<input type="text" id="writer" class="form-control" placeholder="이름을 입력해 주세요." />
+						<input type="text" id="writer" name="writer" class="form-control" placeholder="이름을 입력해 주세요." />
 					</div>
 				</div>
 	
 				<div class="form-group">
 					<label for="content" class="col-sm-2 control-label">내용</label>
 					<div class="col-sm-10">
-						<textarea id="content" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+						<textarea id="content" name="content" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
 					</div>
 				</div>
+				
+				<div class="form-group">
+                    <label for="formFileMultiple" class="col-sm-2 control-label">파일업로드</label>
+                    <div class="col-sm-10">
+                    	<input class="form-control" type="file" id="formFileMultiple" name="multipartFiles" multiple>
+                    </div>
+                </div>
 	
 				<div class="btn_wrap text-center">
 					<a href="javascript: void(0);" onclick="goListWithHref();" class="btn btn-default waves-effect waves-light">돌아가기</a>
@@ -128,24 +135,24 @@
 						return false;
 					}
 					
+					/*
 					const form = document.getElementById('form');
 					const params = {
 						title: form.title.value,
 						writer: form.writer.value,
 						content: form.content.value,
-						idDeleted: false
+						// idDleted로 오타가 있었지만 isDeleted가 원시 자료형이였기 때문에 기본 값인 false를 넣어서 오류가 나지 않았던 것 같다.
+						isDeleted: false
 					};
+					*/
+					const formData = new FormData(form);
 					const id = /*[[ ${id} ]]*/ 0;
 					const uri = id ? `/api/boards/${id}` : '/api/boards';
 					const method = id ? 'PATCH' : 'POST';				
 
 					fetch(uri, {
 						method: method,
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(params)
-
+						body: formData
 					}).then(response => {
 						if (!response.ok) {
 							throw new Error('Request failed...');
@@ -155,6 +162,7 @@
 						goListWithHref();
 
 					}).catch(error => {
+						console.log(error);
 						alert('오류가 발생하였습니다.');
 					});
 				}

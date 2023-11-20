@@ -67,14 +67,10 @@ public class BoardFile {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "BOARD_ID", nullable = false)
 	private Board board;
-	
-	public void setBoard(Board board) {
-		this.board = board;
-	}
 
 	@Builder
 	public BoardFile(String originalName, String savedName, String uploadDir, String extension, long size,
-			String contentType, boolean isDeleted) {
+			String contentType, boolean isDeleted, Board board) {
 		this.originalName = originalName;
 		this.savedName = savedName;
 		this.uploadDir = uploadDir;
@@ -82,5 +78,6 @@ public class BoardFile {
 		this.size = size;
 		this.contentType = contentType;
 		this.isDeleted = isDeleted;
+		this.board = board;
 	}
 }

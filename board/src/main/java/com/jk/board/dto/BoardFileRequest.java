@@ -20,20 +20,17 @@ public class BoardFileRequest {
 	private long size;
 	private String contentType;
 	private Board board;
-	
-	public void setBoard(Board board) {
-		this.board = board;
-	}
 
 	@Builder
 	public BoardFileRequest(String originalName, String savedName, String uploadDir, String extension, long size,
-			String contentType) {
+			String contentType, Board board) {
 		this.originalName = originalName;
 		this.savedName = savedName;
 		this.uploadDir = uploadDir;
 		this.extension = extension;
 		this.size = size;
 		this.contentType = contentType;
+		this.board = board;
 	}
 	
 	public BoardFile toEntity() {
@@ -44,6 +41,7 @@ public class BoardFileRequest {
 				.extension(extension)
 				.size(size)
 				.contentType(contentType)
+				.board(board)
 				.build();
 	}
 }

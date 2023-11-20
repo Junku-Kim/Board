@@ -31,7 +31,7 @@ public class BoardFileService {
 	@Value("${upload.path}")
 	private String uploadDir;
 
-	private final BoardFileRepository fileRepository;
+	private final BoardFileRepository boardFileRepository;
 	private final BoardRepository boardRepository;
 
 	@Transactional
@@ -61,8 +61,8 @@ public class BoardFileService {
 								.extension(extension)
 								.size(file.getSize())
 								.contentType(file.getContentType())
+								.board(boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND)))
 								.build();
-						boardFileRequest.setBoard(boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND)));
 						
 						Long fileId = insertFile(boardFileRequest.toEntity());
 						
@@ -91,6 +91,6 @@ public class BoardFileService {
 
 	@Transactional
 	private Long insertFile(BoardFile boardFile) {
-		return fileRepository.save(null).getId();
+		return boardFileRepository.save(boardFile).getId();
 	}
 }
