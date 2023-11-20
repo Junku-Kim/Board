@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jk.board.entity.Board;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,16 @@ public class BoardRequest {
 	}
 	
 	private List<MultipartFile> multipartFiles;
+	
+	@Builder
+	public BoardRequest(String title, String content, String writer, boolean isDeleted,
+			List<MultipartFile> multipartFiles) {
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.isDeleted = isDeleted;
+		this.multipartFiles = multipartFiles;
+	}
 	
 	public Board toEntity() {
 		return Board.builder()
