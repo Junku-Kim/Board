@@ -10,15 +10,12 @@ import com.jk.board.repository.CustomBoardRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 @Repository
 public class CustomBoardRepositoryImpl implements CustomBoardRepository {
 
 	@PersistenceContext
-    private final EntityManager entityManager;
+    private EntityManager entityManager;
 	
 	/*
 	 * 게시판 첨부파일 리스트
