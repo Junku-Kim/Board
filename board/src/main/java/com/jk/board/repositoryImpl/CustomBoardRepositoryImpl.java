@@ -9,6 +9,7 @@ import com.jk.board.dto.BoardFileRequest;
 import com.jk.board.repository.CustomBoardRepository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Repository
 public class CustomBoardRepositoryImpl implements CustomBoardRepository {
 
+	@PersistenceContext
     private final EntityManager entityManager;
 	
 	/*
