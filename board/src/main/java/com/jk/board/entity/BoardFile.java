@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 		allocationSize = 1
 		)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity()
+@Entity
 public class BoardFile {
 
 	@Id
