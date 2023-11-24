@@ -33,6 +33,13 @@
     			<label for="inp-type-5" class="col-sm-2 control-label">조회 수</label>
     			<div class="col-sm-9"><p id="hits" class="form-control"></p></div>
     		</div>
+    		
+    		<div class="form-group">
+    			<label for="inp-type-5" class="col-sm-2 control-label">첨부파일</label>
+    			<p th:each="boardFile, index : ${boardFile}">
+              		<a th:href="@{/fileDownload/{id}(boardId=${boardFile.id})}" th:text="${boardFile.originalName}">파일이름1.png</a>
+          		</p>
+    		</div>
 		</form>
 
 		<!-- Board 관련 버튼 영역 -->

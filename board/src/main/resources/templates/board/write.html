@@ -71,6 +71,7 @@
 				function goListWithReplace() {
 					location.replace('/board/list' + location.search);
 				}
+				
 				/*
 				 * 게시글 조회
 				 */
@@ -135,16 +136,6 @@
 						return false;
 					}
 					
-					/*
-					const form = document.getElementById('form');
-					const params = {
-						title: form.title.value,
-						writer: form.writer.value,
-						content: form.content.value,
-						// idDleted로 오타가 있었지만 isDeleted가 원시 자료형이였기 때문에 기본 값인 false를 넣어서 오류가 나지 않았던 것 같다.
-						isDeleted: false
-					};
-					*/
 					const formData = new FormData(form);
 					const id = /*[[ ${id} ]]*/ 0;
 					const uri = id ? `/api/boards/${id}` : '/api/boards';
