@@ -2,9 +2,9 @@ package com.jk.board.repository;
 
 import java.util.List;
 
-import com.jk.board.dto.BoardFileRequest;
+import com.jk.board.dto.BoardFileDTO;
 
 public interface CustomBoardRepository {
 
-	List<BoardFileRequest> selectBoardFileDetail(Long boardId);
+	List<BoardFileDTO> selectBoardFileDetail(Long boardId);
 }

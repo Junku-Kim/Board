@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jk.board.dto.BoardFileRequest;
+import com.jk.board.dto.BoardFileDTO;
 import com.jk.board.dto.BoardRequest;
 import com.jk.board.entity.BoardFile;
 import com.jk.board.exception.CustomException;
@@ -54,7 +54,7 @@ public class BoardFileService {
 						
 						result.put("result", "FAIL");
 						
-						BoardFileRequest boardFileRequest = BoardFileRequest.builder()
+						BoardFileDTO boardFileDto = BoardFileDTO.builder()
 								.originalName(originalFileName)
 								.savedName(savedFileName)
 								.uploadDir(uploadDir)
@@ -64,7 +64,7 @@ public class BoardFileService {
 								.board(boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND)))
 								.build();
 						
-						Long fileId = insertFile(boardFileRequest.toEntity());
+						Long fileId = insertFile(boardFileDto.toEntity());
 						
 						try {
 							InputStream fileStream = file.getInputStream();

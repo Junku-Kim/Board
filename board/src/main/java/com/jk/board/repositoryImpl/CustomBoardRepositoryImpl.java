@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.jk.board.dto.BoardFileRequest;
+import com.jk.board.dto.BoardFileDTO;
 import com.jk.board.entity.Board;
 import com.jk.board.exception.CustomException;
 import com.jk.board.exception.ErrorCode;
@@ -29,9 +29,9 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository {
 	 * 게시판 첨부파일 리스트
 	 */
 	@Override
-	public List<BoardFileRequest> selectBoardFileDetail(Long boardId) {
+	public List<BoardFileDTO> selectBoardFileDetail(Long boardId) {
 		Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
-		String jpql = "SELECT NEW com.jk.board.dto.BoardFileRequest(" +
+		String jpql = "SELECT NEW com.jk.board.dto.BoardFileDTO(" +
 					  "boardFile.id, " +
 					  "boardFile.originalName, " +
 					  "boardFile.savedName, " +
@@ -44,7 +44,7 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository {
 					  "WHERE boardFile.board = :board " +
 					  "AND boardFile.isDeleted = :isDeleted";
 		
-		List<BoardFileRequest> result = entityManager.createQuery(jpql, BoardFileRequest.class)
+		List<BoardFileDTO> result = entityManager.createQuery(jpql, BoardFileDTO.class)
 				.setParameter("board", board)
 				.setParameter("isDeleted", false)
 				.getResultList();

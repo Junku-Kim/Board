@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BoardFileRequest {
+public class BoardFileDTO {
 
 	private Long id;
 	private String originalName;
@@ -22,7 +22,7 @@ public class BoardFileRequest {
 	private Board board;
 
 	@Builder
-	public BoardFileRequest(Long id, String originalName, String savedName, String uploadDir, String extension, long size,
+	public BoardFileDTO(Long id, String originalName, String savedName, String uploadDir, String extension, long size,
 			String contentType, Board board) {
 		this.id = id;
 		this.originalName = originalName;
