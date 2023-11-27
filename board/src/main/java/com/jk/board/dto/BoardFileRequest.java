@@ -22,8 +22,9 @@ public class BoardFileRequest {
 	private Board board;
 
 	@Builder
-	public BoardFileRequest(String originalName, String savedName, String uploadDir, String extension, long size,
+	public BoardFileRequest(Long id, String originalName, String savedName, String uploadDir, String extension, long size,
 			String contentType, Board board) {
+		this.id = id;
 		this.originalName = originalName;
 		this.savedName = savedName;
 		this.uploadDir = uploadDir;

@@ -32,6 +32,7 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository {
 	public List<BoardFileRequest> selectBoardFileDetail(Long boardId) {
 		Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		String jpql = "SELECT NEW com.jk.board.dto.BoardFileRequest(" +
+					  "boardFile.id, " +
 					  "boardFile.originalName, " +
 					  "boardFile.savedName, " +
 					  "boardFile.uploadDir, " +
