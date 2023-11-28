@@ -34,7 +34,14 @@
 						<textarea id="content" name="content" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
 					</div>
 				</div>
-				
+				<th:block th:if="${not #lists.isEmpty(boardFileOriginalName)}">
+					<div class="form-group">
+						<label for="inp-type-5" class="col-sm-2 control-label">첨부파일</label>
+			    			<span th:each="boardFileOriginalName : ${boardFileOriginalName}" >
+			              		<span th:text="${boardFileOriginalName.originalName}" style="margin-right: 20px;">>파일이름1.png</span>
+			          		</span>
+		    		</div>
+				</th:block>
 				<div class="form-group">
                     <label for="formFileMultiple" class="col-sm-2 control-label">파일업로드</label>
                     <div class="col-sm-10">

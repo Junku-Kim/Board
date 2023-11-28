@@ -37,9 +37,9 @@
     		<div class="form-group">
 				<label for="inp-type-5" class="col-sm-2 control-label">첨부파일</label>
 				<th:block th:if="${not #lists.isEmpty(boardFile)}">
-	    			<p th:each="boardFile, index : ${boardFile}" class="col-sm-1">
-	              		<a th:href="@{'/fileDownload/' + ${boardFile.id}}" th:text="${boardFile.originalName}">파일이름1.png</a>
-	          		</p>
+	    			<span th:each="boardFile : ${boardFile}">
+	              		<a th:href="@{'/fileDownload/' + ${boardFile.id}}" th:text="${boardFile.originalName}" style="margin-right: 20px;">파일이름1.png</a>
+	          		</span>
 				</th:block>
           		<th:block th:unless="${not #lists.isEmpty(boardFile)}">
 			        <p class="col-sm-9">첨부파일이 없습니다.</p>
