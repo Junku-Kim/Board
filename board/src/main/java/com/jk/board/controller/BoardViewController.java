@@ -33,7 +33,9 @@ public class BoardViewController {
 	@GetMapping("/write")
 	public String writeBoard(@RequestParam(required = false) final Long id, Model model) {
 		model.addAttribute("id", id);
-		
+		if (id != null) {
+			model.addAttribute("boardFileOriginalName", customBoardRepository.selectBoardFileOriginalName(id));
+		}
 		return "board/write";
 	}
 	
