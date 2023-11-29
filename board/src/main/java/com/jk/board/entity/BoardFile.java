@@ -80,4 +80,9 @@ public class BoardFile {
 		this.isDeleted = isDeleted;
 		this.board = board;
 	}
+	
+	public void delete() {
+		this.isDeleted = true;
+		this.deletedDate = LocalDateTime.now();
+	}
 }

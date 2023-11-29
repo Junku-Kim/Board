@@ -159,10 +159,7 @@
 			}
 			
 			fetch(`/api/boards/${id}`, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json'
-				}
+				method: 'DELETE'
 			}).then(response => {
 				if (!response.ok) {
 					throw new Error('Request failed...');
@@ -237,7 +234,7 @@
 		}
 		
 		/*
-		* 게시글 리스트 조회
+		* 댓글 리스트 조회
 		*/
 		function findAllComments(pageNumber) {
 			const id = /*[[ ${id} ]]*/ 0;
@@ -319,11 +316,12 @@
 			const id = /*[[ ${id} ]]*/ 0;
 			const url = `/api/boards/${id}/comments/${commentId}`;
 			
+			if (!confirm('해당 댓글을 삭제할까요?') ) {
+				return false;
+			}
+			
 			fetch(url, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json'
-				}
+				method: 'DELETE'
 			}).then(response => {
 				if (!response.ok) {
 					throw new Error('Request failed...');
@@ -332,7 +330,7 @@
 				alert('댓글이 삭제되었습니다.');
 				findAllComments()
 			}).catch(error => {
-				alert('댓글 삭제 중 오류가 발생했습니다.')
+				alert('댓글 삭제 중 오류가 발생했습니다.');
 			});
 		}
 
