@@ -90,7 +90,18 @@ public class BoardFileService {
 	}
 
 	@Transactional
-	private Long insertFile(BoardFile boardFile) {
+	private Long insertFile(final BoardFile boardFile) {
 		return boardFileRepository.save(boardFile).getId();
+	}
+	
+	/*
+	 * 게시판 파일 삭제
+	 */
+	@Transactional
+	public Long deleteFile(final Long boardFileId) {
+		BoardFile boardFile = boardFileRepository.findById(boardFileId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+		
+		boardFile.delete();
+		return boardFileId;
 	}
 }

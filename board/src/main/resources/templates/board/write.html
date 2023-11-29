@@ -35,10 +35,11 @@
 					</div>
 				</div>
 				<th:block th:if="${not #lists.isEmpty(boardFileOriginalName)}">
-					<div class="form-group">
+					<div class="original-name-list form-group">
 						<label for="inp-type-5" class="col-sm-2 control-label">첨부파일</label>
 			    			<span th:each="boardFileOriginalName : ${boardFileOriginalName}" >
-			              		<span th:text="${boardFileOriginalName.originalName}" style="margin-right: 20px;">>파일이름1.png</span>
+			              		<span th:text="${boardFileOriginalName.originalName}" >파일이름1.png</span>
+			              		<button th:attr="onclick='deleteFile(' + ${boardFileOriginalName.id} + ');'" style="margin-right: 20px;">Delete</button>
 			          		</span>
 		    		</div>
 				</th:block>
@@ -163,6 +164,61 @@
 						console.log(error);
 						alert('오류가 발생하였습니다.');
 					});
+				}
+				
+				/*
+				* 파일 삭제하기
+				*/
+				function deleteFile(fileId) {
+					const id = /*[[ ${id} ]]*/ 0;
+					const url = `/api/boards/${id}/files/${fileId}`;
+					
+					if (!confirm('해당 파일을 삭제할까요?')) {
+						return false;
+					}
+					
+					fetch(url, {
+						method: 'DELETE'
+					}).then(response => {
+						if (!response.ok) {
+							throw new Error('Request failed...');
+						}
+						
+						alert('파일이 삭제되었습니다.');
+						location.replace(location.href);
+						//findAllBoardFileOriginalNames();
+					}).catch(error => {
+						alert('파일 삭제 중 오류가 발생했습니다.');
+					})
+				}
+				
+				/*
+				* 파일 원본 이름 리스트 조회하기
+				*/
+				function findAllBoardFileOriginalNames() {
+					const id = /*[[ ${id} ]]*/ 0;
+					const url = `/api/boards/{id}/files`;
+					
+					fetch(url).then(response => {
+						if (!response.ok) {
+							throw new Error('Request failed...');
+						}
+						
+						return response.json();
+					}).then(json => {
+						let html = '';
+						if (json.length !== 0) {
+							html += `<label for="inp-type-5" class="col-sm-2 control-label">첨부파일</label>`;
+							json.forEach(json => {
+								html += `
+							              		<span style="margin-right: 20px;">>${json.originalName}</span>
+						    		`;
+							})
+							
+							
+						}
+						document.querySelector('.original-name-list').innerHTML = html;
+					})
 				}
 			/*]]>*/
 		</script>

@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardFileOriginalName {
 
+	private Long id;
 	private String originalName;
 
 	@Builder
-	public BoardFileOriginalName(String originalName) {
+	public BoardFileOriginalName(Long id, String originalName) {
+		this.id = id;
 		this.originalName = originalName;
 	}
 	
