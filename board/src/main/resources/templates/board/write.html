@@ -39,7 +39,7 @@
 						<label for="inp-type-5" class="col-sm-2 control-label">첨부파일</label>
 			    			<span th:each="boardFileOriginalName : ${boardFileOriginalName}" >
 			              		<span th:text="${boardFileOriginalName.originalName}" >파일이름1.png</span>
-			              		<button th:attr="onclick='deleteFile(' + ${boardFileOriginalName.id} + ');'" style="margin-right: 20px;">Delete</button>
+			              		<button type="button" th:attr="onclick='deleteFile(' + ${boardFileOriginalName.id} + ');'" style="margin-right: 20px;">Delete</button>
 			          		</span>
 		    		</div>
 				</th:block>
@@ -51,7 +51,7 @@
                 </div>
 	
 				<div class="btn_wrap text-center">
-					<a href="javascript: void(0);" onclick="history.back();" class="btn btn-default waves-effect waves-light">돌아가기</a>
+					<a href="javascript: void(0);" onclick="goCurrentBoardView();" class="btn btn-default waves-effect waves-light">돌아가기</a>
 					<button type="button" onclick="writeBoard();" class="btn btn-primary waves-effect waves-light">저장하기</button>
 				</div>
 			</form>
@@ -78,6 +78,14 @@
 				*/
 				function goListWithReplace() {
 					location.replace('/board/list' + location.search);
+				}
+				
+				/*
+				* 현재 게시글 이동
+				*/
+				function goCurrentBoardView() {
+					const id = /*[[ ${id} ]]*/ 0;
+					location.replace(`/board/view/${id}` + location.search);
 				}
 				
 				/*
@@ -185,8 +193,7 @@
 						}
 						
 						alert('파일이 삭제되었습니다.');
-						location.replace(location.href);
-						//findAllBoardFileOriginalNames();
+						findAllBoardFileOriginalNames();
 					}).catch(error => {
 						alert('파일 삭제 중 오류가 발생했습니다.');
 					})
@@ -197,7 +204,7 @@
 				*/
 				function findAllBoardFileOriginalNames() {
 					const id = /*[[ ${id} ]]*/ 0;
-					const url = `/api/boards/{id}/files`;
+					const url = `/api/boards/${id}/files`;
 					
 					fetch(url).then(response => {
 						if (!response.ok) {
@@ -210,8 +217,10 @@
 						if (json.length !== 0) {
 							html += `<label for="inp-type-5" class="col-sm-2 control-label">첨부파일</label>`;
 							json.forEach(json => {
-								html += `
-							              		<span style="margin-right: 20px;">>${json.originalName}</span>
+								html += `<span>
+							              		<span>${json.originalName}</span>
+							              		<button type="button" onclick="deleteFile(${json.id});" style="margin-right: 20px;">Delete</button>
+						    			</span>
 						    		`;
 							})
 							
