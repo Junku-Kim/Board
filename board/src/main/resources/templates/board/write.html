@@ -51,7 +51,7 @@
                 </div>
 	
 				<div class="btn_wrap text-center">
-					<a href="javascript: void(0);" onclick="goCurrentBoardView();" class="btn btn-default waves-effect waves-light">돌아가기</a>
+					<a href="javascript: void(0);" onclick="goBack();" class="btn btn-default waves-effect waves-light">돌아가기</a>
 					<button type="button" onclick="writeBoard();" class="btn btn-primary waves-effect waves-light">저장하기</button>
 				</div>
 			</form>
@@ -83,9 +83,9 @@
 				/*
 				* 현재 게시글 이동
 				*/
-				function goCurrentBoardView() {
+				function goBack() {
 					const id = /*[[ ${id} ]]*/ 0;
-					location.replace(`/board/view/${id}` + location.search);
+					id ? location.replace(`/board/view/${id}` + location.search) : goListWithReplace();
 				}
 				
 				/*
@@ -166,7 +166,8 @@
 						}
 
 						alert('저장되었습니다.');
-						goListWithHref();
+						
+						id ? goBack() : goListWithHref();
 
 					}).catch(error => {
 						console.log(error);
