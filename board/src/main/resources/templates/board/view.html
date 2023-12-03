@@ -297,7 +297,7 @@
 									
 									<!-- Comment 관련 버튼 영역 -->
 									<div class="btn_wrap text-right col-sm-11">
-										<button type="button" class="btn btn-violet waves-effect waves-light">수정하기</button>
+										<button type="button" onclick="getComment(${obj.id});"class="btn btn-violet waves-effect waves-light">수정하기</button>
 										<button type="button" onclick="deleteComment(${obj.id});" class="btn btn-danger waves-effect waves-light">삭제하기</button>
 									</div>
 								</form>
@@ -307,6 +307,85 @@
 			});
 
 			document.querySelector('.comment-list').innerHTML = commentHtml;
+		}
+		
+		/*
+		* 댓글 수정을 위한 댓글 상세 정보 가져오기
+		*/
+		function getComment(commentId) {
+			const id = /*[[ ${id} ]]*/ 0;
+			const url = `/api/boards/${id}/comments/${commentId}`;
+			
+			fetch(url)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Request failed...');
+				}
+				
+				return response.json();
+			}).then(json => {
+				if (json.id === commentId) {
+				    let	html = `
+					<form id="commentForm" class="form-horizontal form-view">
+						<div class="form-group">
+							<label for="commentWriter" class="col-sm-2 control-label">작성자</label>
+							<div class="col-sm-2">
+								<input type="text" value="${json.writer}" class="form-control" id="commentWriter" placeholder="작성자 이름" style="background-color: transparent;">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="commentText" class="col-sm-2 control-label">댓글</label>
+							<div class="col-sm-9">
+								<textarea class="form-control" id="commentText" rows="3" placeholder="댓글 내용" style="background-color: transparent;">${json.comment}</textarea>
+							</div>
+						</div>
+						
+						<!-- Comment 관련 버튼 영역 -->
+						<div class="btn_wrap text-right col-sm-11">
+							<button type="button"  class="btn btn-violet waves-effect waves-light">수정하기</button>
+							<button type="button" onclick="cancelCommentUpdate();" class="btn btn-default waves-effect waves-light">취소하기</button>
+						</div>
+					</form>
+					`;
+					document.querySelector('.comments').innerHTML = html;
+					
+					const commentForm = document.getElementById('commentForm');
+					commentForm.commentText.focus();
+				}
+			}).catch(error => {
+				console.log(error);
+				alert('댓글 수정 시작 중 오류가 발생했습니다.')
+			})
+		}
+		
+		/*
+		* 댓글 수정 취소
+		*/
+		function cancelCommentUpdate() {
+			let html = `
+						<form id="commentForm" class="form-horizontal form-view">
+							<div class="form-group">
+								<label for="commentWriter" class="col-sm-2 control-label">작성자</label>
+								<div class="col-sm-2">
+									<input type="text" class="form-control" id="commentWriter" placeholder="작성자 이름" style="background-color: transparent;">
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="commentText" class="col-sm-2 control-label">댓글</label>
+								<div class="col-sm-9">
+									<textarea class="form-control" id="commentText" rows="3" placeholder="댓글 내용" style="background-color: transparent;"></textarea>
+								</div>
+							</div>
+							
+							<!-- Comment 관련 버튼 영역 -->
+							<div class="btn_wrap text-right col-sm-11">
+								<button type="button" onclick="writeComment();" class="btn btn-primary waves-effect waves-light">작성하기</button>
+							</div>
+						</form>
+						`;
+						document.querySelector('.comments').innerHTML = html;
 		}
 		
 		/*
