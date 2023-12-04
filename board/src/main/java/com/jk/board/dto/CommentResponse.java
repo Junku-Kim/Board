@@ -2,7 +2,6 @@ package com.jk.board.dto;
 
 import java.time.LocalDateTime;
 
-import com.jk.board.entity.Board;
 import com.jk.board.entity.Comment;
 
 import lombok.AccessLevel;
@@ -19,7 +18,6 @@ public class CommentResponse {
 	private boolean isDeleted;
 	private LocalDateTime createdDate;
 	private LocalDateTime modifiedDate;
-	private Board board;
 	
 	public CommentResponse(final Comment comment) {
 		this.id = comment.getId();
@@ -28,7 +26,6 @@ public class CommentResponse {
 		this.isDeleted = comment.getIsDeleted();
 		this.createdDate = comment.getCreatedDate();
 		this.modifiedDate = comment.getModifiedDate();
-		this.board = comment.getBoard();
 	}
 	
 	public boolean getIsDeleted() {
