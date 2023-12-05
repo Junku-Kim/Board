@@ -343,8 +343,8 @@
 						
 						<!-- Comment 관련 버튼 영역 -->
 						<div class="btn_wrap text-right col-sm-11">
-							<button type="button"  class="btn btn-violet waves-effect waves-light">수정하기</button>
-							<button type="button" onclick="cancelCommentUpdate();" class="btn btn-default waves-effect waves-light">취소하기</button>
+							<button type="button" onclick="updateComment(${json.id});" class="btn btn-violet waves-effect waves-light">수정하기</button>
+							<button type="button" onclick="returnOriginComment();" class="btn btn-default waves-effect waves-light">취소하기</button>
 						</div>
 					</form>
 					`;
@@ -362,7 +362,7 @@
 		/*
 		* 댓글 수정 취소
 		*/
-		function cancelCommentUpdate() {
+		function returnOriginComment() {
 			let html = `
 						<form id="commentForm" class="form-horizontal form-view">
 							<div class="form-group">
@@ -386,6 +386,45 @@
 						</form>
 						`;
 						document.querySelector('.comments').innerHTML = html;
+		}
+		
+		/*
+		* 댓글 수정
+		*/
+		function updateComment(commentId) {
+			if (!isValid()) {
+				return false;
+			}
+					
+			const params = {
+				writer: commentForm.commentWriter.value,
+				comment: commentForm.commentText.value,
+				isDeleted: false
+			};
+			const id = /*[[ ${id} ]]*/ 0;
+			const url = `/api/boards/${id}/comments/${commentId}`;
+			
+			fetch(url, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(params)
+			}).then(response => {
+				if (!response.ok) {
+					throw new Error('Request failed...');
+				}
+				
+				alert('수정되었습니다.');
+				commentForm.commentWriter.value = '';
+        		commentForm.commentText.value = '';
+				findAllComments();
+				returnOriginComment();
+			}).catch(error => {
+				console.log(error);
+				alert('댓글 수정 중 오류가 발생했습니다.');
+			})
+			
 		}
 		
 		/*
