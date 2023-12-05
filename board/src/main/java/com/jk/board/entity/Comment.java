@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +24,7 @@ import lombok.NoArgsConstructor;
 		allocationSize = 1
 		)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "COMMENTS")
-@Entity
+@Entity(name = "COMMENTS")
 public class Comment {
 
 	@Id
