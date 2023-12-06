@@ -24,6 +24,7 @@ import com.jk.board.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class BoardFileService {
@@ -34,7 +35,6 @@ public class BoardFileService {
 	private final BoardFileRepository boardFileRepository;
 	private final BoardRepository boardRepository;
 
-	@Transactional
 	public Map<String, Object> saveFiles(final Long boardId, final BoardRequest boardRequest) throws Exception {
 		List<MultipartFile> multipartFiles = boardRequest.getMultipartFiles();
 		
@@ -64,7 +64,7 @@ public class BoardFileService {
 								.board(boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND)))
 								.build();
 						
-						Long fileId = insertFile(boardFileDto.toEntity());
+						Long fileId = boardFileRepository.save(boardFileDto.toEntity()).getId();
 						
 						try {
 							InputStream fileStream = file.getInputStream();
@@ -88,16 +88,10 @@ public class BoardFileService {
 		
 		return result;
 	}
-
-	@Transactional
-	private Long insertFile(final BoardFile boardFile) {
-		return boardFileRepository.save(boardFile).getId();
-	}
 	
 	/*
 	 * 게시판 파일 삭제
 	 */
-	@Transactional
 	public Long deleteFile(final Long boardFileId) {
 		BoardFile boardFile = boardFileRepository.findById(boardFileId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		
