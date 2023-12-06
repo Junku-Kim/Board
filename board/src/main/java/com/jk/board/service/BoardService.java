@@ -20,6 +20,7 @@ import com.jk.board.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class BoardService {
@@ -32,12 +33,11 @@ public class BoardService {
 	/*
 	 * 게시글 생성
 	 */
-	@Transactional
 	public Long writeBoard(final BoardRequest boardRequest) throws Exception {
 		Board board = boardRepository.save(boardRequest.toEntity());
 		Long id = board.getId();
 		
-		saveFiles(id, boardRequest);
+		boardFileService.saveFiles(id, boardRequest);
 		
 		return id;
 	}
@@ -45,27 +45,18 @@ public class BoardService {
 	/*
 	 * 게시글 수정
 	 */
-	@Transactional
 	public Long updateBoard(final Long id, final BoardRequest boardRequest) throws Exception {
 		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		board.update(boardRequest.getTitle(), boardRequest.getContent(), boardRequest.getWriter());
 		
-		saveFiles(id, boardRequest);
+		boardFileService.saveFiles(id, boardRequest);
 		
 		return id;
 	}
 	
 	/*
-	 * 파일 저장
-	 */
-	private void saveFiles(final Long id, final BoardRequest boardRequest) throws Exception {
-		boardFileService.saveFiles(id, boardRequest);
-	}
-	
-	/*
 	 * 게시글 삭제
 	 */
-	@Transactional
 	public Long deleteBoard(final Long id) {
 		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		board.delete();
@@ -76,6 +67,7 @@ public class BoardService {
 	/*
 	 * 게시글 리스트 조회 (페이지네이션)
 	 */
+	@Transactional(readOnly = true)
 	public Map<String, Object> findAllBoards(final BoardCommonParams params) {
 		int count = boardMapper.countBoard(params);
 
@@ -97,7 +89,7 @@ public class BoardService {
 	/*
 	 * 게시글 상세정보 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public BoardResponse findBoardById(final Long id) {
 		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
 		board.increaseHits();
