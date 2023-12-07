@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jk.board.repository.CustomBoardRepository;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 @RequestMapping("/board")
 @Controller
 public class BoardViewController {

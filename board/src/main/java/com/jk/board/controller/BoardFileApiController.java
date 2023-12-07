@@ -12,10 +12,9 @@ import com.jk.board.dto.BoardFileOriginalName;
 import com.jk.board.repository.CustomBoardRepository;
 import com.jk.board.service.BoardFileService;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
 public class BoardFileApiController {

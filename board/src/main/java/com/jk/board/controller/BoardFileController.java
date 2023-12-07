@@ -18,10 +18,9 @@ import com.jk.board.exception.ErrorCode;
 import com.jk.board.repository.BoardFileRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 @Controller
 public class BoardFileController {
 	
