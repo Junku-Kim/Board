@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jk.board.dto.BoardFileDTO;
 import com.jk.board.dto.BoardFileOriginalName;
-import com.jk.board.repository.CustomBoardRepository;
+import com.jk.board.repository.CustomBoardFileRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Repository
-public class CustomBoardRepositoryImpl implements CustomBoardRepository {
+public class CustomBoardFileRepositoryImpl implements CustomBoardFileRepository {
 
 	@PersistenceContext
     private EntityManager entityManager;
