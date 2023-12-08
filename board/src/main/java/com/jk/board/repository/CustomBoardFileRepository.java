@@ -5,7 +5,7 @@ import java.util.List;
 import com.jk.board.dto.BoardFileDTO;
 import com.jk.board.dto.BoardFileOriginalName;
 
-public interface CustomBoardRepository {
+public interface CustomBoardFileRepository {
 
 	List<BoardFileDTO> selectBoardFileDetail(Long boardId);
 
