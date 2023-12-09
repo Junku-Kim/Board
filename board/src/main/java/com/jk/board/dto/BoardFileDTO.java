@@ -3,13 +3,12 @@ package com.jk.board.dto;
 import com.jk.board.entity.Board;
 import com.jk.board.entity.BoardFile;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class BoardFileDTO {
 
 	private Long id;

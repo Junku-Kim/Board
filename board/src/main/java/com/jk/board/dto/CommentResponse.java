@@ -4,12 +4,11 @@ import java.time.LocalDateTime;
 
 import com.jk.board.entity.Comment;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class CommentResponse {
 
 	private Long id;
