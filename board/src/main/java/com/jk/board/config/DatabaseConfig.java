@@ -10,9 +10,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-
 @PropertySource("classpath:/application.properties")
 @Configuration
+/*
+ * MyBatis 사용을 위한 Config 클래스입니다.
+ */
 public class DatabaseConfig {
 
 	private final DataSource dataSource;

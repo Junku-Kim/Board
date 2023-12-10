@@ -17,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
+/*
+ * 파일과 관련된 API Controller입니다.
+ */
 public class BoardFileApiController {
 
 	private final BoardFileService boardFileService;
@@ -24,14 +27,19 @@ public class BoardFileApiController {
 	private final CustomBoardFileRepository customBoardFileRepository;
 	
 	/*
-	 * 파일 원본 이름 리스트 조회
+	 * 파일 원본 이름 리스트 조회 메서드
+	 * 
+	 * Description:
+	 *  게시글 수정 시 파일 이름만을 나타내기 위한 메서드입니다.
+	 *  파일의 원본 이름만 필요하기 때문에 BoardFile의 id와 원본 이름만 가진 DTO를 사용합니다.
 	 */
 	@GetMapping("/boards/{boardId}/files")
 	public List<BoardFileOriginalName> findAllBoardFileOriginalNames(@PathVariable final Long boardId) {
 		return customBoardFileRepository.selectBoardFileOriginalName(boardId);
 	}
+	
 	/*
-	 * 파일 삭제
+	 * 파일 삭제 메서드
 	 */
 	@DeleteMapping("/boards/{boardId}/files/{id}")
 	public Long deleteBoardFile(@PathVariable final Long id) {

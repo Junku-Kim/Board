@@ -14,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 @Controller
+/*
+ * 게시글 화면을 관리하는 Controller입니다.
+ */
 public class BoardViewController {
 	
 	private final CustomBoardFileRepository customBoardFileRepository;
@@ -27,11 +30,12 @@ public class BoardViewController {
 	}
 	
 	/*
-	 * 게시글 작성 페이지
+	 * 게시글 작성/수정 페이지
 	 */
 	@GetMapping("/write")
 	public String writeBoard(@RequestParam(required = false) final Long id, Model model) {
 		model.addAttribute("id", id);
+		// 수정 페이지일 경우
 		if (id != null) {
 			model.addAttribute("boardFileOriginalName", customBoardFileRepository.selectBoardFileOriginalName(id));
 		}
