@@ -6,13 +6,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jk.board.entity.Board;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class BoardRequest {
 
 	private String title;

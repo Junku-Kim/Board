@@ -2,12 +2,11 @@ package com.jk.board.dto;
 
 import com.jk.board.entity.Comment;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class CommentRequest {
 
 	private String comment;
