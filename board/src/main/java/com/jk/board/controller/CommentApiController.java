@@ -19,6 +19,9 @@ import com.jk.board.service.CommentService;
 
 @RequestMapping("/api")
 @RestController
+/*
+ * 댓글과 관련된 API Controller입니다.
+ */
 public class CommentApiController {
 
 	private final CommentService commentService;
@@ -28,7 +31,7 @@ public class CommentApiController {
 	}
 	
 	/*
-	 * 댓글 생성
+	 * 댓글 생성 메서드
 	 */
 	@PostMapping("/boards/{boardId}/comments")
 	public Long writeComment(@PathVariable final Long boardId, @RequestBody final CommentRequest commentRequest) {
@@ -36,7 +39,7 @@ public class CommentApiController {
 	}
 	
 	/*
-	 * 댓글 리스트 조회
+	 * 댓글 리스트 조회 메서드
 	 */
 	@GetMapping("/boards/{boardId}/comments")
 	public Page<CommentResponse> findAllComments(@PathVariable final Long boardId,
@@ -45,7 +48,7 @@ public class CommentApiController {
 	}
 	
 	/*
-	 * 댓글 수정
+	 * 댓글 수정 메서드
 	 */
 	@PatchMapping("/boards/{boardId}/comments/{id}")
 	public Long updateComment(@PathVariable final Long id, @RequestBody final CommentRequest commentRequest) {
@@ -53,7 +56,7 @@ public class CommentApiController {
 	}
 	
 	/*
-	 * 댓글 삭제
+	 * 댓글 삭제 메서드
 	 */
 	@DeleteMapping("/boards/{boardId}/comments/{id}")
 	public Long deleteComment(@PathVariable final Long id) {
@@ -61,7 +64,7 @@ public class CommentApiController {
 	}
 	
 	/*
-	 * 댓글 상세 정보 조회
+	 * 댓글 상세 정보 조회 메서드
 	 */
 	@GetMapping("/boards/{boardId}/comments/{id}")
 	public CommentResponse findCommentById(@PathVariable final Long id) {
