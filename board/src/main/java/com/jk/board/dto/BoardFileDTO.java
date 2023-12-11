@@ -8,6 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+/*
+ * 스프링부트를 사용할 때는 기본 생성자가 없어도  jackson-module-parameter-names을 통해 정상적으로 작동하지만
+ * 종속되지 않게 기본 생성자를 추가했습니다.
+ */
 @NoArgsConstructor
 public class BoardFileDTO {
 

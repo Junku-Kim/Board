@@ -19,9 +19,6 @@ import com.jk.board.service.CommentService;
 
 @RequestMapping("/api")
 @RestController
-/*
- * 댓글과 관련된 API Controller입니다.
- */
 public class CommentApiController {
 
 	private final CommentService commentService;

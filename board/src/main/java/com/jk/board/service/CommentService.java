@@ -25,7 +25,7 @@ public class CommentService {
 	private final BoardRepository boardRepository;
 	
 	/*
-	 * 댓글 생성
+	 * 댓글 생성 메서드
 	 */
 	public Long writeComment(final Long boardId, final CommentRequest commentRequest) {
 		Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
@@ -38,7 +38,7 @@ public class CommentService {
 	}
 	
 	/*
-	 * 댓글 수정
+	 * 댓글 수정 메서드
 	 */
 	public Long updateComment(final Long id, final CommentRequest commentRequest) {
 		Comment comment = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
@@ -48,7 +48,7 @@ public class CommentService {
 	}
 	
 	/*
-	 * 댓글 삭제
+	 * 댓글 삭제 메서드
 	 */
 	public Long deleteComment(final Long id) {
 		Comment comment = commentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
@@ -58,7 +58,7 @@ public class CommentService {
 	}
 	
 	/*
-	 * 댓글 리스트 조회
+	 * 댓글 리스트 조회 메서드
 	 */
 	@Transactional(readOnly = true)
 	public Page<CommentResponse> findAllComments(final Long boardId, final Pageable pageable) {
@@ -68,7 +68,7 @@ public class CommentService {
 	}
 	
 	/*
-	 * 댓글 상세정보 조회
+	 * 댓글 상세정보 조회 메서드
 	 */
 	@Transactional(readOnly = true)
 	public CommentResponse findCommentById(final Long id) {

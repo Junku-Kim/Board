@@ -31,7 +31,7 @@ public class BoardService {
 	private final BoardFileService boardFileService;
 	
 	/*
-	 * 게시글 생성
+	 * 게시글 생성 메서드
 	 */
 	public Long writeBoard(final BoardRequest boardRequest) throws Exception {
 		Board board = boardRepository.save(boardRequest.toEntity());
@@ -43,7 +43,7 @@ public class BoardService {
 	}
 	
 	/*
-	 * 게시글 수정
+	 * 게시글 수정 메서드
 	 */
 	public Long updateBoard(final Long id, final BoardRequest boardRequest) throws Exception {
 		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
@@ -55,7 +55,7 @@ public class BoardService {
 	}
 	
 	/*
-	 * 게시글 삭제
+	 * 게시글 삭제 메서드
 	 */
 	public Long deleteBoard(final Long id) {
 		Board board = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
@@ -65,7 +65,7 @@ public class BoardService {
 	}
 	
 	/*
-	 * 게시글 리스트 조회 (페이지네이션)
+	 * 게시글 리스트 조회 메서드(페이지네이션)
 	 */
 	@Transactional(readOnly = true)
 	public Map<String, Object> findAllBoards(final BoardCommonParams params) {
@@ -87,7 +87,7 @@ public class BoardService {
 	}
 	
 	/*
-	 * 게시글 상세정보 조회
+	 * 게시글 상세정보 조회 메서드
 	 */
 	@Transactional(readOnly = true)
 	public BoardResponse findBoardById(final Long id) {
