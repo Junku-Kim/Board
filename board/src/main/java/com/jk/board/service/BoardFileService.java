@@ -29,24 +29,30 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class BoardFileService {
 	
+	// application.properties에 저장된 upload.path를 이용
 	@Value("${upload.path}")
 	private String uploadDir;
 
 	private final BoardFileRepository boardFileRepository;
 	private final BoardRepository boardRepository;
 
+	// 파일 저장 메서드
 	public Map<String, Object> saveFiles(final Long boardId, final BoardRequest boardRequest) throws Exception {
 		List<MultipartFile> multipartFiles = boardRequest.getMultipartFiles();
 		
 		Map<String, Object> result = new HashMap<>();
 		
+		// 업로드된 파일들의 id를 저장할 list
 		List<Long> fileIds = new ArrayList<>();
 		
 		try {
+			// 첨부 파일이 없으면 null 값이 나올 수 있고 그럴 경우 더 이상 연산을 할 필요가 없으니 먼저 확인
 			if (multipartFiles != null) {
+				// list가 비어있지 않고 첫 번째 파일의 원본 이름이 비어있지 않은 지 확인
 				if (multipartFiles.size() > 0 && !multipartFiles.get(0).getOriginalFilename().equals("")) {
 					for (MultipartFile file : multipartFiles) {
 						String originalFileName = file.getOriginalFilename();
+						// 확장자 추출
 						String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
 						String savedFileName = UUID.randomUUID() + extension;
 						

@@ -21,9 +21,6 @@ import com.jk.board.service.BoardService;
 
 @RequestMapping("/api")
 @RestController
-/*
- * 게시글과 관련된 API Controller입니다.
- */
 public class BoardApiController {
 
 	private final BoardService boardService;

@@ -8,6 +8,9 @@ import com.jk.board.dto.BoardResponse;
 import com.jk.board.paging.BoardCommonParams;
 
 @Mapper
+/*
+ * MyBatis와 연결하기 위한 BoardMapper 인터페이스입니다.
+ */
 public interface BoardMapper {
 
 	/*

@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+// @CreatedDate를 사용하기 위한 어노테이션
 @EntityListeners(AuditingEntityListener.class)
 @SequenceGenerator(
 		name = "BOARD_FILE_ID_SEQ_GENERATOR",
@@ -38,18 +39,22 @@ public class BoardFile {
 	private Long id;
 	
 	@Column(nullable = false)
-	private String originalName;
+	private String originalName; // 파일의 원본 이름
 	
 	@Column(nullable = false)
-	private String savedName;
+	private String savedName; // 파일이 저장될 때의 이름
 	
-	private String uploadDir;
+	@Column(nullable = false)
+	private String uploadDir; // 업로드 경로
 	
-	private String extension;
+	@Column(nullable = false)
+	private String extension; // 파일의 확장자
 	
-	@Column(name = "FILE_SIZE")
+	// oracle에 size 예약어가 존재하기 때문에 변경
+	@Column(name = "FILE_SIZE", nullable = false)
 	private long size;
 
+	@Column(nullable = false)
 	private String contentType;
 	
 	private boolean isDeleted;

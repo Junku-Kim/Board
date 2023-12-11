@@ -17,9 +17,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
-/*
- * 파일과 관련된 API Controller입니다.
- */
 public class BoardFileApiController {
 
 	private final BoardFileService boardFileService;

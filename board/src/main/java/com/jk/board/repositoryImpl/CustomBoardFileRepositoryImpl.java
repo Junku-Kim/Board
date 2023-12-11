@@ -21,7 +21,7 @@ public class CustomBoardFileRepositoryImpl implements CustomBoardFileRepository 
 	
 	
 	/*
-	 * 게시판 첨부파일 리스트
+	 * 게시판 첨부파일 리스트 메서드
 	 */
 	@Override
 	public List<BoardFileDTO> selectBoardFileDetail(final Long boardId) {
@@ -47,7 +47,7 @@ public class CustomBoardFileRepositoryImpl implements CustomBoardFileRepository 
 	}
 	
 	/*
-	 * 게시글 수정 시 첨부파일 이름을 표시하기 위한 리스트
+	 * 게시글 수정 시 첨부파일 이름을 표시하기 위한 리스트 메서드
 	 */
 	public List<BoardFileOriginalName> selectBoardFileOriginalName(final Long boardId) {
 		String jpql = "SELECT NEW com.jk.board.dto.BoardFileOriginalName(" +

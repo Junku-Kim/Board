@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+/*
+ * 게시글 수정 시 원본 이름만을 보여주기 위한 BoardFile DTO입니다.
+ */
 public class BoardFileOriginalName {
 
 	private Long id;

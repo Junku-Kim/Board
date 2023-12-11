@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+/*
+ * 게시글 페이지네이션과 검색은 MyBatis로 작동되기 때문에 기본 생성자가 필요합니다.
+ */
 @NoArgsConstructor
 public class BoardResponse {
 

@@ -8,9 +8,9 @@ import lombok.Getter;
 public class ErrorResponse {
 
 	private final LocalDateTime timestamp = LocalDateTime.now();
-    private final int status;
-    private final String error;
-    private final String code;
+    private final int status; // 에러 코드 상태 ex) 403, 500
+    private final String error; // HttpStatus에 만들어진 예외 ex) NOT_FOUND
+    private final String code; // ErrorCode에서 만든 예외
     private final String message;
 
     public ErrorResponse(final ErrorCode errorCode) {
