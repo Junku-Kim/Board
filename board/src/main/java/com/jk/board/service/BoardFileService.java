@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jk.board.dto.BoardFileDTO;
+import com.jk.board.dto.BoardFileOriginalName;
 import com.jk.board.dto.BoardRequest;
 import com.jk.board.entity.BoardFile;
 import com.jk.board.exception.CustomException;
@@ -39,7 +40,6 @@ public class BoardFileService {
 	// 파일 저장 메서드
 	public Map<String, Object> saveFiles(final Long boardId, final BoardRequest boardRequest) throws Exception {
 		List<MultipartFile> multipartFiles = boardRequest.getMultipartFiles();
-		
 		Map<String, Object> result = new HashMap<>();
 		
 		// 업로드된 파일들의 id를 저장할 list
@@ -96,7 +96,7 @@ public class BoardFileService {
 	}
 	
 	/*
-	 * 게시판 파일 삭제
+	 * 게시판 파일 삭제 메서드
 	 */
 	public Long deleteFile(final Long boardFileId) {
 		BoardFile boardFile = boardFileRepository.findById(boardFileId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
@@ -104,4 +104,21 @@ public class BoardFileService {
 		boardFile.delete();
 		return boardFileId;
 	}
+
+	/*
+	 * 첨부 파일들의 원본 이름 반환 메서드
+	 * CustomBoardFileRepository 상속을 통해 받아 온 메서드
+	 */
+	public List<BoardFileOriginalName> selectBoardFileOriginalName(Long boardId) {
+		return boardFileRepository.selectBoardFileOriginalName(boardId);
+	}
+
+	/*
+	 * 첨부 파일 반환 메서드
+	 * CustomBoardFileRepository 상속을 통해 받아 온 메서드
+	 */
+	public Object selectBoardFileDetail(Long boardId) {
+		return boardFileRepository.selectBoardFileDetail(boardId);
+	}
+	
 }

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.board.dto.BoardFileOriginalName;
-import com.jk.board.repository.CustomBoardFileRepository;
 import com.jk.board.service.BoardFileService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,8 +20,6 @@ public class BoardFileApiController {
 
 	private final BoardFileService boardFileService;
 	
-	private final CustomBoardFileRepository customBoardFileRepository;
-	
 	/*
 	 * 파일 원본 이름 리스트 조회 메서드
 	 * 
@@ -32,7 +29,7 @@ public class BoardFileApiController {
 	 */
 	@GetMapping("/boards/{boardId}/files")
 	public List<BoardFileOriginalName> findAllBoardFileOriginalNames(@PathVariable final Long boardId) {
-		return customBoardFileRepository.selectBoardFileOriginalName(boardId);
+		return boardFileService.selectBoardFileOriginalName(boardId);
 	}
 	
 	/*

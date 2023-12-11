@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jk.board.repository.CustomBoardFileRepository;
+import com.jk.board.service.BoardFileService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +19,8 @@ import lombok.RequiredArgsConstructor;
  */
 public class BoardViewController {
 	
-	private final CustomBoardFileRepository customBoardFileRepository;
-
+	private final BoardFileService boardFileService;
+	
 	/*
 	 * 게시글 리스트 페이지
 	 */
@@ -37,7 +37,7 @@ public class BoardViewController {
 		model.addAttribute("id", id);
 		// 수정 페이지일 경우
 		if (id != null) {
-			model.addAttribute("boardFileOriginalName", customBoardFileRepository.selectBoardFileOriginalName(id));
+			model.addAttribute("boardFileOriginalName", boardFileService.selectBoardFileOriginalName(id));
 		}
 		return "board/write";
 	}
@@ -48,7 +48,7 @@ public class BoardViewController {
 	@GetMapping("/view/{id}")
 	public String viewBoard(@PathVariable final Long id, Model model) {
 		model.addAttribute("id", id);
-		model.addAttribute("boardFile", customBoardFileRepository.selectBoardFileDetail(id));
+		model.addAttribute("boardFile", boardFileService.selectBoardFileDetail(id));
 		
 		return "board/view";
 	}
