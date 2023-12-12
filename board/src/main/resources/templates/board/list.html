@@ -71,6 +71,9 @@
 		*/
 		function addEnterSearchEvent() {
 			document.getElementById('keywordForSearch')
+					// 이벤트 리스너는 실행되면 대기하고 있다가 이벤트 발생 시 실행 그 후 다시 대기
+					// 세 번째 인자를 설정하지 않을 시 기본 값 false, 버블링으로 처리
+					// true인 캡처링은 거의 사용되지 않음
 					.addEventListener('keyup', (e) => {
 						if (e.keyCode == 13) {
 							findAll(1);
@@ -100,6 +103,8 @@
 
 		/*
 		* 조회 API 호출
+		* async가 붙은 비동기 함수는 무조건 프로미스를 반환한다.
+		* 그리고 await은 앞의 await이 끝날 때까지 기다린다. (프로미스가 끝날 때까지)
 		*/
 		async function getJson(uri, params) {
 			if (params) {
@@ -121,7 +126,9 @@
 		 * 게시글 리스트 조회
 		 */
 		function findAll(currentPage) {
+			// 쿼리 스트링에서 현재 페이지 가져오기
 			const currentPageParam = Number(new URLSearchParams(location.search).get('currentPage'));
+			// 현재 페이지가 매개변수로 들어온 값이 있다면 그걸 우선으로 해라
 			currentPage = (currentPage) ? currentPage : ((currentPageParam) ? currentPageParam : 1);
 			
 			const form = document.getElementById('searchForm');
@@ -135,6 +142,7 @@
 			
 			const queryString = new URLSearchParams(params).toString();
 			const replaceUri = location.pathname + '?' + queryString;
+			// URL을 업데이트하면서 히스토리 유지
 			history.replaceState({}, '', replaceUri);
 
 			getJson('/api/boards', params).then(response => {
