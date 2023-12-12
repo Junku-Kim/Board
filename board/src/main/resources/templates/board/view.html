@@ -36,11 +36,13 @@
     		
     		<div class="form-group">
 				<label for="inp-type-5" class="col-sm-2 control-label">첨부파일</label>
+				<!-- 첨부파일 리스트가 있다면 -->
 				<th:block th:if="${not #lists.isEmpty(boardFile)}">
 	    			<span th:each="boardFile : ${boardFile}">
 	              		<a th:href="@{'/fileDownload/' + ${boardFile.id}}" th:text="${boardFile.originalName}" style="margin-right: 20px;">파일이름1.png</a>
 	          		</span>
 				</th:block>
+				<!-- 첨부파일 리스트가 없다면-->
           		<th:block th:unless="${not #lists.isEmpty(boardFile)}">
 			        <p class="col-sm-9">첨부파일이 없습니다.</p>
 			    </th:block>
@@ -104,6 +106,7 @@
 		* 게시글 조회
 		*/
 		function findBoard() {
+			// 템플릿 엔진에서 값 가져오기
 			const id = /*[[ ${id} ]]*/  0;
 			
 			fetch(`/api/boards/${id}`).then(response => {
@@ -112,7 +115,7 @@
 				}
 				return response.json();
 			}).then(json => {
-				console.table(json);
+				// 수정했으면 modifiedDate로 아니면 createdDate로
 				json.modifiedDate ? json.date = moment(json.modifiedDate).format('YYYY-MM-DD HH:mm:ss') : json.date = moment(json.createdDate).format('YYYY-MM-DD HH:mm:ss');
 				
 				Object.keys(json).forEach(key => {
@@ -252,6 +255,7 @@
 				
 				comment = page.content;
 				
+				// 댓글 존재 유무
 				if (comment.length == 0) {
 					document.querySelector('.comment-list').innerHTML = '<p style="margin-bottom: 20px; margin-top: 20px;">등록된 댓글이 없습니다.</p>';
 
@@ -360,7 +364,7 @@
 		}
 		
 		/*
-		* 댓글 수정 취소
+		* 원래 댓글 작성 폼으로 돌아가기
 		*/
 		function returnOriginComment() {
 			let html = `

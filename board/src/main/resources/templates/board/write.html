@@ -34,6 +34,7 @@
 						<textarea id="content" name="content" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
 					</div>
 				</div>
+				<!-- 수정 시 모델을 통해 원본 이름 리스트를 보내주는 데 리스트가 존재한다면-->
 				<th:block th:if="${not #lists.isEmpty(boardFileOriginalName)}">
 					<div class="original-name-list form-group">
 						<label for="inp-type-5" class="col-sm-2 control-label">첨부파일</label>
@@ -85,6 +86,7 @@
 				*/
 				function goBack() {
 					const id = /*[[ ${id} ]]*/ 0;
+					// 작성과 수정이 같은 페이지기 때문에 id 유무에 따라 처리
 					id ? location.replace(`/board/view/${id}` + location.search) : goListWithReplace();
 				}
 				
@@ -166,8 +168,8 @@
 						}
 
 						alert('저장되었습니다.');
-						
-						id ? goBack() : goListWithHref();
+
+						goBack();
 
 					}).catch(error => {
 						console.log(error);
