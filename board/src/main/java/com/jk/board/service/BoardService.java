@@ -69,13 +69,27 @@ public class BoardService {
 	 */
 	@Transactional(readOnly = true)
 	public Map<String, Object> findAllBoards(final BoardCommonParams params) {
-		int count = boardMapper.countBoard(params);
-
-		if (count < 1) {
+		Long count = 0L;
+		// 검색어가 있을 때
+		if (params.getKeywordForSearch() != "") {
+			if (params.getSearchType().equals("")) { // 전체 선택
+				count = boardRepository.countBoardByAllSearchType(params.getKeywordForSearch());
+			} else if (params.getSearchType().equals("title")) { // 제목 선택
+				count = boardRepository.countBoardByTitle(params.getKeywordForSearch());
+			} else if (params.getSearchType().equals("content")) { // 내용 선택
+				count = boardRepository.countBoardByContent(params.getKeywordForSearch());
+			} else if (params.getSearchType().equals("writer")) { // 작성자 선택
+				count = boardRepository.countBoardByWriter(params.getKeywordForSearch());
+			}
+		} else { // 검색어가 없을 때
+			count = boardRepository.countBoardDefault();
+		}
+		
+		if (count < 1L) {
 			return Collections.emptyMap();
 		}
 		
-		Pagination pagination = new Pagination(count, params);
+		Pagination pagination = new Pagination(count.intValue(), params);
 		params.setPagination(pagination);
 		
 		List<BoardResponse> list = boardMapper.findAllBoards(params);
