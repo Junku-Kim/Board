@@ -13,7 +13,6 @@ import com.jk.board.dto.BoardResponse;
 import com.jk.board.entity.Board;
 import com.jk.board.exception.CustomException;
 import com.jk.board.exception.ErrorCode;
-import com.jk.board.mapper.BoardMapper;
 import com.jk.board.paging.BoardCommonParams;
 import com.jk.board.paging.Pagination;
 import com.jk.board.repository.BoardRepository;
@@ -26,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
 
 	private final BoardRepository boardRepository;
-	private final BoardMapper boardMapper;
 	
 	private final BoardFileService boardFileService;
 	
@@ -74,12 +72,8 @@ public class BoardService {
 		if (params.getKeywordForSearch() != "") {
 			if (params.getSearchType().equals("")) { // 전체 선택
 				count = boardRepository.countBoardByAllSearchType(params.getKeywordForSearch());
-			} else if (params.getSearchType().equals("title")) { // 제목 선택
-				count = boardRepository.countBoardByTitle(params.getKeywordForSearch());
-			} else if (params.getSearchType().equals("content")) { // 내용 선택
-				count = boardRepository.countBoardByContent(params.getKeywordForSearch());
-			} else if (params.getSearchType().equals("writer")) { // 작성자 선택
-				count = boardRepository.countBoardByWriter(params.getKeywordForSearch());
+			} else { // 단일 검색
+				count = boardRepository.countBoardBySearchType(params.getSearchType(), params.getKeywordForSearch());
 			}
 		} else { // 검색어가 없을 때
 			count = boardRepository.countBoardDefault();
@@ -92,7 +86,18 @@ public class BoardService {
 		Pagination pagination = new Pagination(count.intValue(), params);
 		params.setPagination(pagination);
 		
-		List<BoardResponse> list = boardMapper.findAllBoards(params);
+		List<BoardResponse> list = Collections.emptyList();
+		
+		// 검색어가 있을 때
+		if (params.getKeywordForSearch() != "") {
+			if (params.getSearchType().equals("")) { // 전체 검색
+				list = boardRepository.findPageBoardsByAllSearchType(params);
+			} else { // 단일 검색
+				list = boardRepository.findPageBoardsBySearchType(params);
+			}
+		} else { // 검색어가 없을 때
+			list = boardRepository.findPageBoardsDefault(params);
+		}
 		
 		Map<String, Object> response = new HashMap<>();
 		response.put("params", params);
