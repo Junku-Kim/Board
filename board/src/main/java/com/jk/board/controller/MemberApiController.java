@@ -10,16 +10,12 @@ import com.jk.board.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
 public class MemberApiController {
 
 	private final MemberService memberService;
-	
-	public MemberApiController(final MemberService service) {
-		this.memberService = service;
-	}
 	
 	/*
 	 * 회원 저장 메서드
