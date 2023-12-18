@@ -9,5 +9,5 @@ import com.jk.board.entity.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-	public Page<Comment> findAllByBoardAndIsDeleted(Board board, boolean isDeleted, Pageable pageable);
+	Page<Comment> findAllByBoardAndIsDeleted(Board board, boolean isDeleted, Pageable pageable);
 }
