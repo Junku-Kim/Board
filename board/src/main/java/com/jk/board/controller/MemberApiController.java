@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jk.board.dto.MemberRequest;
 import com.jk.board.service.MemberService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class MemberApiController {
 	 * 회원 저장 메서드
 	 */
 	@PostMapping("/members")
-	public Long create(@RequestBody final MemberRequest memberRequest) {
+	public Long create(@Valid @RequestBody final MemberRequest memberRequest) {
 		return memberService.join(memberRequest);
 	}
 }
