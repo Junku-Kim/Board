@@ -29,12 +29,17 @@ public class MemberService {
 		
 		memberRepository.findByMemberName(memberRequest.getMemberName())
 						.ifPresent(m -> {
-							throw new IllegalStateException("이미 존재하는 회원입니다.");
+							throw new IllegalStateException("이미 존재하는 회원 이름입니다.");
 						});
+		
+		// 비밀 번호를 확인했을 때 다르다면
+		if (!memberRequest.getPassword().equals(memberRequest.getPasswordForCheck())) {
+			throw new IllegalStateException("입력한 두 비밀번호가 다릅니다.");
+		}
 		
 		memberRepository.findByEmail(memberRequest.getEmail())
 						.ifPresent(m -> {
-							throw new IllegalStateException("이미 존재하는 회원입니다.");
+							throw new IllegalStateException("이미 존재하는 이메일입니다.");
 						});
 		
 		return memberRepository.save(member).getId();
