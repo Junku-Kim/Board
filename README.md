@@ -12,7 +12,7 @@ Springboot와 Spring Data JPA를 이용한 Rest API 기반의 게시판 개인 �
  - **ORM:** Spring Data JPA, ~MyBatis~(JPA로 마이그레이션 완료)
 
 ## 주요 기능
-#### 회원가입(개발중)
+#### 회원가입(Spring Security, 개발중)
 #### 게시글 (추후 WIKI 추가 예정)
  - CRUD
  - 페이지네이션
