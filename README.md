@@ -2,7 +2,7 @@
 Springboot와 Spring Data JPA를 이용한 Rest API 기반의 게시판 개인 토이 프로젝트입니다.
 
 ## 개발 기간
-'23.09.18 ~ ing
+'23.09.18 ~ 12.12
 
 ## 개발 환경
  - **Java 17**
